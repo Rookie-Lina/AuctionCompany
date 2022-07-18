@@ -1,4 +1,4 @@
-package entity;
+package com.sg.entity;
 
 import lombok.Data;
 
@@ -16,8 +16,8 @@ public class Goods {
     private int id; // 自增ID
     private int userId; // 拍卖者ID
     private String goodsName; // 商品名称
-    private String goodImg; // 商品图片
-    private String goodInfo; // 商品描述
+    private String goodsImg; // 商品图片
+    private String goodsInfo; // 商品描述
     private double marketPrice; // 预估市场价
     private double startingPrice; // 起拍价
     private double minIncr; // 最低加价

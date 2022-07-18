@@ -1,4 +1,4 @@
-package entity;
+package com.sg.entity;
 
 import lombok.Data;
 
@@ -12,7 +12,7 @@ import java.util.Date;
 @Data
 public class Staffs {
 
-    private int staffId; // 自增ID
+    private int id; // 自增ID
     private String loginName; // 账号
     private String loginPwd; // 密码
     private String staffName; // 职员名称

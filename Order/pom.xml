@@ -13,6 +13,14 @@
     <name>Order</name>
     <artifactId>Order</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.example</groupId>
+            <artifactId>common</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+
     <build>
         <plugins>
             <plugin>
@@ -29,9 +37,5 @@
             </plugin>
         </plugins>
     </build>
-
-    <dependencies>
-
-    </dependencies>
 
 </project>
