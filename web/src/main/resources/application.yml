@@ -25,3 +25,12 @@ spring:
     timeout: 0
     database: 0
     password: Lin058211.
+
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/**/*.xml
+  configuration:
+    # xml返回数据为map类型时，空值的key也要显示出来
+    call-setters-on-nulls: true
+  global-config:
+    db-config:
+      id-type: auto
