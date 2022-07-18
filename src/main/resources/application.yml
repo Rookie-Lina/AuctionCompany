@@ -1,0 +1,11 @@
+server:
+  port: 8080
+
+spring:
+  profiles:
+    active: dev
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://1.15.150.178:3306/auctionaall?serverTimezone=GMT%2B8
+    username: linwenchao
+    password: 123456
