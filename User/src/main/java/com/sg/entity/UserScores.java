@@ -1,4 +1,4 @@
-package entity;
+package com.sg.entity;
 
 import lombok.Data;
 
@@ -12,7 +12,7 @@ import java.util.Date;
 @Data
 public class UserScores {
 
-    private int scoreId; // 自增Id
+    private int id; // 自增Id
     private int userId; // 用户Id
     private int score; // 积分数
     private int dataSrc; // 积分来源

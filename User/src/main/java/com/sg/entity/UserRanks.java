@@ -1,4 +1,4 @@
-package entity;
+package com.sg.entity;
 
 import lombok.Data;
 
@@ -12,7 +12,7 @@ import java.util.Date;
 @Data
 public class UserRanks {
 
-    private int rankId; // 自增ID
+    private int id; // 自增ID
     private String rankName; // 等级名称
     private int startScore; // 开始积分
     private int endScore; // 结束积分

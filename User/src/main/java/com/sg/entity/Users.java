@@ -1,4 +1,4 @@
-package entity;
+package com.sg.entity;
 
 
 import lombok.Data;
@@ -13,7 +13,7 @@ import java.util.Date;
 @Data
 public class Users {
 
-    private int userId; // 自增ID
+    private int id; // 自增ID
     private String loginName; // 账号
     private String loginPwd; // 密码
     private int userSex; // 性别
