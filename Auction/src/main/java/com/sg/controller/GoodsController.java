@@ -9,6 +9,7 @@ import com.sg.service.GoodsService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @Description
@@ -24,15 +25,16 @@ public class GoodsController {
 
     // 查询 所有商品总数
     @GetMapping("/count")
-    public Result queryGoodsCountByType(@RequestParam int goodsType) {
+    public Result queryGoodsCountByType(@RequestParam List<Integer> goodsType) {
         int i = goodsService.goodsCount(goodsType);
         return new SuccessResult(200, String.valueOf(i));
     }
 
     //查询 分页分类查询商品
     @GetMapping("/list")
-    public Result queryGoodsList(int count, int current, int goodsType) {
+    public Result queryGoodsList(int count, int current,@RequestParam List<Integer> goodsType) {
         int size = count % 10 == 0 ? count / 10 : count / 10 + 1;
+        System.out.println(goodsType);
         IPage<Goods> goodsIPage = goodsService.selectGoodsList(current, size, goodsType);
         return new SuccessResult(200, "查询成功", goodsIPage);
     }
@@ -46,7 +48,7 @@ public class GoodsController {
 
     // 用户出价竞拍
     @PostMapping("/auction")
-    public Result auction(Goods goods) {
+    public Result auction(@RequestBody Goods goods) {
         // TODO 将竞拍商品存入redis中加快响应速度
         /**
          *  key : goods-auction+id

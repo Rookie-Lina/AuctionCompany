@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @Description
@@ -31,15 +32,15 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     // 查询 所有商品总数
-    public int goodsCount(int goodsType) {
+    public int goodsCount(List<Integer> goodsType) {
         return goodsDao.selectGoodsCount(goodsType);
     }
 
     //查询 分页分类查询商品
-    public IPage<Goods> selectGoodsList(int current, int size, int goodsType) {
+    public IPage<Goods> selectGoodsList(int current, int size, List<Integer> goodsType) {
         Page<Goods> page = new Page<>(current, size);
         QueryWrapper<Goods> wrapper = new QueryWrapper<>();
-        wrapper.eq("good_type_id", goodsType);
+        wrapper.in("good_type_id", goodsType);
         IPage<Goods> goodsIPage = goodsDao.selectPage(page, wrapper);
         return goodsIPage;
     }
@@ -47,6 +48,7 @@ public class GoodsServiceImpl implements GoodsService {
     public Goods selectGoodById(int id){ return goodsDao.selectById(id);}
 
 
+    // 竞拍商品
     public int auction(Goods goods) {
         UpdateWrapper<Goods> wrapper = new UpdateWrapper<>();
         wrapper.eq("id",goods.getId())

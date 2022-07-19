@@ -3,6 +3,8 @@ package com.sg.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.sg.entity.Goods;
 
+import java.util.List;
+
 /**
  * @Description
  * @auther Rookie_lin
@@ -12,9 +14,9 @@ public interface GoodsService {
 
     Object test();
 
-    int goodsCount(int goodsType);
+    int goodsCount(List<Integer> goodsType);
 
-    IPage<Goods> selectGoodsList(int current, int size, int goodsType);
+    IPage<Goods> selectGoodsList(int current, int size, List<Integer> goodsType);
 
     Goods selectGoodById(int id);
 

@@ -5,7 +5,11 @@
 <mapper namespace="com.sg.dao.GoodsDao" >
 
 
-    <select id="selectGoodsCount" resultType="java.lang.Integer">
-        select count(*) from goods where good_type_id = #{goodsType}
+    <select id="selectGoodsCount" resultType="java.lang.Integer" >
+        select count(*) from goods
+        where good_type_id in
+        <foreach collection="goodsType" item="type"  open="(" separator="," close=")">
+            #{type}
+        </foreach>
     </select>
 </mapper>

@@ -3,6 +3,9 @@ package com.sg.dao;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.sg.entity.Goods;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * @Description
@@ -12,6 +15,6 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface GoodsDao extends BaseMapper<Goods> {
 
-    int selectGoodsCount(int goodsType);
+    int selectGoodsCount(@Param("goodsType") List<Integer> goodsType);
 
 }
