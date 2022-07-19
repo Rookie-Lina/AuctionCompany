@@ -5,8 +5,11 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sg.dao.GoodsDao;
 import com.sg.entity.Goods;
+import com.sg.result.Result;
 import com.sg.service.GoodsService;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.annotation.Resource;
 
@@ -34,9 +37,12 @@ public class GoodsServiceImpl implements GoodsService {
     public IPage<Goods> selectGoodsList(int current, int size, int goodsType) {
         Page<Goods> page = new Page<>(current, size);
         QueryWrapper<Goods> wrapper = new QueryWrapper<>();
-        wrapper.eq("good_type_id",goodsType);
+        wrapper.eq("good_type_id", goodsType);
         IPage<Goods> goodsIPage = goodsDao.selectPage(page, wrapper);
         return goodsIPage;
     }
+
+    public Goods selectGoodById(int id){ return goodsDao.selectById(id);}
+
 
 }

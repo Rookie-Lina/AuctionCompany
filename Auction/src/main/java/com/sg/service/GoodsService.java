@@ -15,4 +15,6 @@ public interface GoodsService {
     int goodsCount(int goodsType);
 
     IPage<Goods> selectGoodsList(int current, int size, int goodsType);
+
+    Goods selectGoodById(int id);
 }
