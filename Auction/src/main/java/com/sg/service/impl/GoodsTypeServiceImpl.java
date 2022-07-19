@@ -8,10 +8,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.List;
 
-/**
- * @Description
- * @create 2022-07-19 19:26
- */
+
 @Service
 public class GoodsTypeServiceImpl implements GoodsTypeService {
 

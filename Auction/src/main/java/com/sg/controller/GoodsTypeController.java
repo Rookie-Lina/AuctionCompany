@@ -11,10 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import java.util.List;
 
-/**
- * @Description
- * @create 2022-07-19 19:27
- */
+
 @RestController
 @RequestMapping("/goods-type")
 public class GoodsTypeController {
