@@ -1,6 +1,7 @@
 package com.sg.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sg.dao.GoodsDao;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.annotation.Resource;
+import java.util.Date;
 
 /**
  * @Description
@@ -41,8 +43,18 @@ public class GoodsServiceImpl implements GoodsService {
         IPage<Goods> goodsIPage = goodsDao.selectPage(page, wrapper);
         return goodsIPage;
     }
-
+    //根据ID查询商品信息查询商品信息
     public Goods selectGoodById(int id){ return goodsDao.selectById(id);}
+
+
+    public int auction(Goods goods) {
+        UpdateWrapper<Goods> wrapper = new UpdateWrapper<>();
+        wrapper.eq("id",goods.getId())
+                .set("now_price",goods.getNowPrice())
+                .set("last_user_id",goods.getLastUserId())
+                .set("raise_time", new Date());
+        return goodsDao.update(null, wrapper);
+    }
 
 
 }

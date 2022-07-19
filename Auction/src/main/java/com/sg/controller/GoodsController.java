@@ -3,6 +3,7 @@ package com.sg.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.sg.entity.Goods;
 import com.sg.result.Result;
+import com.sg.result.impl.ErrorResult;
 import com.sg.result.impl.SuccessResult;
 import com.sg.service.GoodsService;
 import org.springframework.web.bind.annotation.*;
@@ -42,5 +43,20 @@ public class GoodsController {
         Goods goods = goodsService.selectGoodById(id);
         return new SuccessResult(goods);
     }
+
+    // 用户出价竞拍
+    @PostMapping("/auction")
+    public Result auction(Goods goods) {
+        // TODO 将竞拍商品存入redis中加快响应速度
+        /**
+         *  key : goods-auction+id
+         *  value: hash :
+         *          nowPrice,lastUserId,raiseTime
+         */
+        if (goods.getLastUserId()==goods.getUserId()||goodsService.auction(goods) <= 0 )
+            return new ErrorResult("出价错误");
+        else return new SuccessResult("出价成功");
+    }
+
 
 }

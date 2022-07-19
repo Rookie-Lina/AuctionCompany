@@ -17,4 +17,6 @@ public interface GoodsService {
     IPage<Goods> selectGoodsList(int current, int size, int goodsType);
 
     Goods selectGoodById(int id);
+
+    int auction(Goods goods);
 }
