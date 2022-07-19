@@ -34,8 +34,7 @@ public class GoodsController {
     @GetMapping("/list")
     public Result queryGoodsList(int count, int current, @RequestParam List<Integer> goodsType) {
         int size = count % 10 == 0 ? count / 10 : count / 10 + 1;
-        System.out.println(goodsType);
-        IPage<Goods> goodsIPage = goodsService.selectGoodsList(current, size, goodsType);
+        IPage<Goods> goodsIPage = goodsService.selectGoodsList(count, current, size, goodsType);
         return new SuccessResult(200, "查询成功", goodsIPage);
     }
 
@@ -44,6 +43,19 @@ public class GoodsController {
     public Result queryGoodById(@PathVariable int id) {
         Goods goods = goodsService.selectGoodById(id);
         return new SuccessResult(goods);
+    }
+
+    // 搜索商品
+    @GetMapping("/search")
+
+    public Result searchGoods(int count, int current, String search) {
+        if (count == 0)
+            count = goodsService.goodsCountLikeName(search);
+        if (count == 0)
+            return new SuccessResult("未查询到该商品");
+        int size = count % 10 == 0 ? count / 10 : count / 10 + 1;
+        IPage<Goods> goodsIPage = goodsService.selectGoodsListByName(count, current, size, search);
+        return new SuccessResult(goodsIPage);
     }
 
     // 用户出价竞拍
