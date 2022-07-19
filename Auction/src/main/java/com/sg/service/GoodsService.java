@@ -21,4 +21,6 @@ public interface GoodsService {
     Goods selectGoodById(int id);
 
     int auction(Goods goods);
+
+    int finishAuction(Goods goods);
 }
