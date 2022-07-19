@@ -1,5 +1,8 @@
 package com.sg.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.sg.entity.Goods;
+
 /**
  * @Description
  * @auther Rookie_lin
@@ -8,4 +11,8 @@ package com.sg.service;
 public interface GoodsService {
 
     Object test();
+
+    int goodsCount(int goodsType);
+
+    IPage<Goods> selectGoodsList(int current, int size, int goodsType);
 }

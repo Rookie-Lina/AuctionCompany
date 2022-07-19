@@ -21,8 +21,10 @@ public class Test0Controller {
     @Resource
     private GoodsTypeDao goodsTypeDao;
 
-    @GetMapping("/goods")
+//    @GetMapping("/goods")
     public String goods() {
+
+
         System.out.println(goodsService.test());
         System.out.println(goodsTypeDao.selectList(null));
         return "ok";
