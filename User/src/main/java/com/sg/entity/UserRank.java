@@ -1,16 +1,14 @@
 package com.sg.entity;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.util.Date;
 
-/**
- * @Description
- * @auther Rookie_lin
- * @create 2022-07-18 18:11
- */
+
 @Data
-public class UserRanks {
+@TableName("user_ranks")
+public class UserRank {
 
     private int id; // 自增ID
     private String rankName; // 等级名称

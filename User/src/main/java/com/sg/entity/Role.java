@@ -1,14 +1,11 @@
 package com.sg.entity;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
-/**
- * @Description 角色表
- * @auther Rookie_lin
- * @create 2022-07-18 18:11
- */
 @Data
-public class Roles {
+@TableName("roles")
+public class Role {
 
     private int id; // 自增ID
     private int roleId; // -1超级管理员0普通管理员1普通用户

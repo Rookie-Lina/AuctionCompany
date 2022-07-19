@@ -1,17 +1,15 @@
 package com.sg.entity;
 
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.util.Date;
 
-/**
- * @Description
- * @auther Rookie_lin
- * @create 2022-07-18 18:10
- */
+
 @Data
-public class Users {
+@TableName("users")
+public class User {
 
     private int id; // 自增ID
     private String loginName; // 账号

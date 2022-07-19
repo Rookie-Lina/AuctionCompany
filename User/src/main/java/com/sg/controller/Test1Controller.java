@@ -6,36 +6,32 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 
-/**
- * @Description
- * @auther Rookie_lin
- * @create 2022-07-18 20:39
- */
+
 @RestController
 public class Test1Controller {
 
     @Resource
-    private RolesDao rolesDao;
+    private RoleDao roleDao;
 
     @Resource
-    private StaffsDao staffsDao;
+    private StaffDao staffsDao;
 
     @Resource
-    private UserRanksDao userRanksDao;
+    private UserRankDao userRankDao;
 
     @Resource
-    private UsersDao usersDao;
+    private UserDao usersDao;
 
     @Resource
-    private UserScoresDao userScoresDao;
+    private UserScoreDao userScoreDao;
 
     @GetMapping("/users")
     public String users(){
-        System.out.println(rolesDao.selectList(null));
+        System.out.println(roleDao.selectList(null));
         System.out.println(staffsDao.selectList(null));
-        System.out.println(userRanksDao.selectList(null));
+        System.out.println(userRankDao.selectList(null));
         System.out.println(usersDao.selectList(null));
-        System.out.println(userScoresDao.selectList(null));
+        System.out.println(userScoreDao.selectList(null));
         return "ok";
     }
 }
