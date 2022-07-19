@@ -2,14 +2,15 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.sg.dao.GoodsDao" >
+<mapper namespace="com.sg.dao.GoodsDao">
 
 
-    <select id="selectGoodsCount" resultType="java.lang.Integer" >
+    <select id="selectGoodsCount" resultType="java.lang.Integer">
         select count(*) from goods
-        where good_type_id in
-        <foreach collection="goodsType" item="type"  open="(" separator="," close=")">
+        where finish = 0 and good_type_id in
+        <foreach collection="goodsType" item="type" open="(" separator="," close=")">
             #{type}
         </foreach>
+
     </select>
 </mapper>

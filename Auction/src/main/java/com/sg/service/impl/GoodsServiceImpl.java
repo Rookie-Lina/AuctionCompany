@@ -33,6 +33,7 @@ public class GoodsServiceImpl implements GoodsService {
 
     // 查询 所有商品总数
     public int goodsCount(List<Integer> goodsType) {
+        QueryWrapper<Goods> wrapper = new QueryWrapper<>();
         return goodsDao.selectGoodsCount(goodsType);
     }
 
@@ -41,6 +42,7 @@ public class GoodsServiceImpl implements GoodsService {
         Page<Goods> page = new Page<>(current, size);
         QueryWrapper<Goods> wrapper = new QueryWrapper<>();
         wrapper.in("good_type_id", goodsType);
+        wrapper.eq("finish",0);
         IPage<Goods> goodsIPage = goodsDao.selectPage(page, wrapper);
         return goodsIPage;
     }
@@ -56,6 +58,15 @@ public class GoodsServiceImpl implements GoodsService {
                 .set("last_user_id",goods.getLastUserId())
                 .set("raise_time", new Date());
         return goodsDao.update(null, wrapper);
+    }
+
+    @Override
+    public int finishAuction(Goods goods) {
+        UpdateWrapper<Goods> wrapper = new UpdateWrapper<>();
+        wrapper.eq("id",goods.getId())
+                .eq("last_user_id",goods.getLastUserId())
+                .set("finish",goods.getFinish());
+        return goodsDao.update(null,wrapper);
     }
 
 

@@ -32,7 +32,7 @@ public class GoodsController {
 
     //查询 分页分类查询商品
     @GetMapping("/list")
-    public Result queryGoodsList(int count, int current,@RequestParam List<Integer> goodsType) {
+    public Result queryGoodsList(int count, int current, @RequestParam List<Integer> goodsType) {
         int size = count % 10 == 0 ? count / 10 : count / 10 + 1;
         System.out.println(goodsType);
         IPage<Goods> goodsIPage = goodsService.selectGoodsList(current, size, goodsType);
@@ -55,11 +55,15 @@ public class GoodsController {
          *  value: hash :
          *          nowPrice,lastUserId,raiseTime
          */
-        if (goods.getLastUserId()==goods.getUserId()||goodsService.auction(goods) <= 0 )
+        if (goods.getLastUserId() == goods.getUserId() || goodsService.auction(goods) <= 0)
             return new ErrorResult("出价错误");
         else return new SuccessResult("出价成功");
-
     }
 
-
+    @PostMapping("/finish")
+    public Result finishAuction(@RequestBody Goods goods) {
+        if (goodsService.finishAuction(goods) <= 0)
+            return new ErrorResult("错误");
+        else return new SuccessResult("成功");
+    }
 }
