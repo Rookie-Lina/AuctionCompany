@@ -56,6 +56,7 @@ public class GoodsController {
         if (goods.getLastUserId()==goods.getUserId()||goodsService.auction(goods) <= 0 )
             return new ErrorResult("出价错误");
         else return new SuccessResult("出价成功");
+
     }
 
 
