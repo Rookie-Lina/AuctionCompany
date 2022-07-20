@@ -9,7 +9,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
     url: jdbc:mysql://1.15.150.178:3306/auctionaall
-    username: linwenchao
+    username: zhangyiming
     password: 123456
 
   # redis配置
