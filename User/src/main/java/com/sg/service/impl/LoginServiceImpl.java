@@ -3,6 +3,7 @@ package com.sg.service.impl;
 import com.sg.entity.RedisCache;
 import com.sg.entity.User;
 import com.sg.result.Result;
+import com.sg.result.impl.SuccessResult;
 import com.sg.service.LoginService;
 import com.sg.util.JwtUtil;
 import com.sg.utilObject.LoginUser;
@@ -13,6 +14,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @Service
@@ -31,16 +33,14 @@ public class LoginServiceImpl implements LoginService {
         if(Objects.isNull(authenticate)){
             throw new RuntimeException("用户名或密码错误");
         }
-        //使用userid生成token
-//        LoginUser loginUser = (LoginUser) authenticate.getPrincipal();
-//        String userId = loginUser.getUser().getId().toString();
-//        String jwt = JwtUtil.createJWT(userId);
+        //使用账号 生成token
+        LoginUser loginUser= (LoginUser) authenticate.getPrincipal();
+        String jwt = JwtUtil.createJWT(loginUser.getUser().getLoginName());
+        Map<String,String> map=new HashMap<>();
+        map.put("token",jwt);
 //        //authenticate存入redis
-//        redisCache.setCacheObject("login:"+userId,loginUser);
+        redisCache.setCacheObject("login:"+loginUser.getUser().getLoginName(),loginUser);
 //        //把token响应给前端
-//        HashMap<String,String> map = new HashMap<>();
-//        map.put("token",jwt);
-//        return new ResponseResult(200,"登陆成功",map);
-        return null;
+        return new SuccessResult(200,"登录成功！",jwt);
     }
 }
