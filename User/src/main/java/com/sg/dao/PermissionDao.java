@@ -8,6 +8,11 @@ import java.util.List;
 
 @Mapper
 public interface PermissionDao extends BaseMapper<Permission> {
+    /**
+     * 根据用户id查出用户拥有的权限
+     * @param uid
+     * @return
+     */
     List<String> getPermissionByUserId(Integer uid);
 }
 
