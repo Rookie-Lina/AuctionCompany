@@ -93,4 +93,24 @@ public class UserServiceImpl implements UserService {
         userPermissionDao.setauthorityToNomallUser(user.getId(),3);
         return new SuccessResult(200,"注册成功",user.getLoginName());
     }
+    //删除用户功能
+    @Override
+    public Result deleteUserByLoginName(User user) {
+        String loginName = user.getLoginName();
+        //查询是否有此用户
+        LambdaQueryWrapper<User>  lambdaQueryWrapper=new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(User::getLoginName,loginName);
+        User user01 = userDao.selectOne(lambdaQueryWrapper);
+        //判断逻辑
+        if(user01==null){
+            return new ErrorResult(403,"该用户不存在，无法删除");
+        }
+        //删除用户权限信息
+//        LambdaQueryWrapper<UserPermission> lq01=new LambdaQueryWrapper<>();
+//        lq01.eq(UserPermission::getUserId,user01.getId());
+        userPermissionDao.deleteByUserId(user01.getId());
+        //删除用户信息
+        int delete = userDao.delete(lambdaQueryWrapper);
+        return new  SuccessResult(200,"删除成功！");
+    }
 }

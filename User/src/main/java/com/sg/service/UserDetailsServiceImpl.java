@@ -30,7 +30,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if(Objects.isNull(user)){
             throw new RuntimeException("用户名或密码错误");
         }
-        //TODO 根据用户查询权限信息 添加到LoginUser中
+        // 根据用户查询权限信息 添加到LoginUser中
         int id = user.getId();
         List<String> permissionByUserId = permissionDao.getPermissionByUserId(id);
         //如果查询到封装成loginUser返回
