@@ -13,5 +13,10 @@ public interface UserPermissionDao extends BaseMapper<UserPermission> {
      * @param pid
      */
     void setauthorityToNomallUser(@Param("id") int id, @Param("pid") int pid);
+
+    /**
+     * 根据用户id删除用户已有权限
+     * @param uid
+     */
     void deleteByUserId(Integer uid);
 }
