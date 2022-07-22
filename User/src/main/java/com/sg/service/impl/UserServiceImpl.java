@@ -4,7 +4,7 @@ import com.sg.entity.RedisCache;
 import com.sg.entity.User;
 import com.sg.result.Result;
 import com.sg.result.impl.SuccessResult;
-import com.sg.service.LoginService;
+import com.sg.service.UserService;
 import com.sg.util.JwtUtil;
 import com.sg.utilObject.LoginUser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ import java.util.Map;
 import java.util.Objects;
 
 @Service
-public class LoginServiceImpl implements LoginService {
+public class UserServiceImpl implements UserService {
 
     @Autowired
     private AuthenticationManager authenticationManager;
