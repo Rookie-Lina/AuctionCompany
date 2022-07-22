@@ -22,6 +22,7 @@ public class GoodsTypeController {
     @GetMapping("/list")
     public Result queryList() {
         List<GoodsType> goodsTypeList = goodsTypeService.selectAll();
+
         return new SuccessResult(goodsTypeList);
     }
 }

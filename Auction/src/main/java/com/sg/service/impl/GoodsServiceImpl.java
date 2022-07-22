@@ -36,8 +36,8 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     //查询 分页分类查询商品
-    public IPage<Goods> selectGoodsList(int count, int current, int size, List<Integer> goodsType) {
-        Page<Goods> page = new Page<>(current, size, count);
+    public IPage<Goods> selectGoodsList(int current, int size, List<Integer> goodsType) {
+        Page<Goods> page = new Page<>(current, size);
         QueryWrapper<Goods> wrapper = new QueryWrapper<>();
         wrapper.in("good_type_id", goodsType);
         wrapper.eq("finish", 0);
@@ -64,9 +64,11 @@ public class GoodsServiceImpl implements GoodsService {
     @Override
     public int finishAuction(Goods goods) {
         UpdateWrapper<Goods> wrapper = new UpdateWrapper<>();
-        wrapper.eq("id", goods.getId())
-                .eq("last_user_id", goods.getLastUserId())
-                .set("finish", goods.getFinish());
+        wrapper.eq("id", goods.getId());
+        if (goods.getLastUserId() != 0)
+            wrapper.eq("last_user_id", goods.getLastUserId())
+                    .set("finish", 1);
+        else  wrapper.set("finish", -1);
         return goodsDao.update(null, wrapper);
     }
 
@@ -74,18 +76,18 @@ public class GoodsServiceImpl implements GoodsService {
     public int goodsCountLikeName(String search) {
         QueryWrapper<Goods> wrapper = new QueryWrapper<>();
         wrapper.like("goods_name", search)
-                .eq("finish",0);
+                .eq("finish", 0);
         return goodsDao.selectCount(wrapper);
     }
 
     @Override
-    public IPage<Goods> selectGoodsListByName(int count, int current, int size, String search) {
+    public IPage<Goods> selectGoodsListByName(int current, int size, String search) {
 
-        Page<Goods> page = new Page<>(current, size, count);
+        Page<Goods> page = new Page<>(current, size);
         QueryWrapper<Goods> wrapper = new QueryWrapper<>();
-        wrapper.like("goods_name",search)
-                .eq("finish",0);
-        return goodsDao.selectPage(page,wrapper);
+        wrapper.like("goods_name", search)
+                .eq("finish", 0);
+        return goodsDao.selectPage(page, wrapper);
     }
 
 
