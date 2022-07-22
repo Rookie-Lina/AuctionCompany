@@ -25,6 +25,7 @@ public class Test1Controller {
 
     @Resource
     private UserScoreDao userScoreDao;
+    @PreAuthorize("hasAnyAuthority('TestPerson')")
     @GetMapping("/users")
     public String users(){
         System.out.println(roleDao.selectList(null));

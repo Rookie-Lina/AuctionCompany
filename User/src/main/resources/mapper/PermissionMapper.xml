@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sg.dao.PermissionDao">
+    <select id="getPermissionByUserId" resultType="java.lang.String">
+        SELECT p.permissionName
+        FROM permission p
+        WHERE p.id IN (
+            SELECT up.permissionId
+            FROM user_permission up
+            WHERE up.userId=#{uid}
+        );
+    </select>
+</mapper>
