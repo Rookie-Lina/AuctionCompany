@@ -14,7 +14,7 @@ spring:
 
   # redis配置
   redis:
-    host: 1.15.150.178
+    host: 139.224.11.125
     port: 6379
     jedis:
       pool:
@@ -24,7 +24,7 @@ spring:
         max-wait: -1
     timeout: 0
     database: 0
-    password: zym123456
+    password: Lin058211.
 
 mybatis-plus:
   mapper-locations: classpath*:/mapper/**/*.xml
