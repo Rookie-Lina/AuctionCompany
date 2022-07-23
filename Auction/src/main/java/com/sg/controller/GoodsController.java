@@ -8,12 +8,10 @@ import com.sg.result.impl.SuccessResult;
 import com.sg.service.GoodsService;
 import com.sg.vo.GoodsVo;
 import org.springframework.beans.BeanUtils;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -23,6 +21,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/goods")
+
 public class GoodsController {
 
     @Resource
@@ -45,6 +44,7 @@ public class GoodsController {
 
     //根据ID查询商品信息查询商品信息
     @GetMapping("/id")
+    @PreAuthorize("hasAnyAuthority('NormalUser')")
     public Result queryGoodById(int id) {
         Goods goods = goodsService.selectGoodById(id);
         GoodsVo goodsVo = new GoodsVo();
