@@ -1,6 +1,7 @@
 package com.sg.controller;
 
 import com.sg.dao.*;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,7 +25,7 @@ public class Test1Controller {
 
     @Resource
     private UserScoreDao userScoreDao;
-
+    @PreAuthorize("hasAnyAuthority('TestPerson')")
     @GetMapping("/users")
     public String users(){
         System.out.println(roleDao.selectList(null));
