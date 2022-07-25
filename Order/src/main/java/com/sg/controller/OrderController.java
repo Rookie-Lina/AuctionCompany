@@ -1,0 +1,69 @@
+package com.sg.controller;
+
+import com.sg.entity.Orders;
+import com.sg.entity.UserAddress;
+import com.sg.result.Result;
+import com.sg.result.impl.ErrorResult;
+import com.sg.result.impl.SuccessResult;
+import com.sg.service.OrderService;
+import com.sg.service.UserScoreService;
+import com.sg.vo.OrderVo;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.Resource;
+import java.util.List;
+
+/**
+ * @Description
+ * @auther Rookie_lin
+ * @create 2022-07-25 11:37
+ */
+@RestController
+@RequestMapping("/order")
+@Transactional
+public class OrderController {
+
+    @Resource
+    private OrderService orderService;
+
+    @Resource
+    private UserScoreService userScoreService;
+
+    // 根据订单状态 查询订单
+    @GetMapping("/paid/{status}")
+    public Result unpaidList(@PathVariable int status) {
+        List<OrderVo> orderVos = orderService.selectPaidListByStatus(status);
+        return new SuccessResult(orderVos);
+    }
+
+    // 创建订单
+    @PostMapping("/create")
+    public Result createOrder(int lastUserId, int id) {
+        if (lastUserId != 0) {
+            Orders order = new Orders();
+            order.setUserId(lastUserId);
+            order.setGoodsId(id);
+            orderService.createOrder(order);
+        }
+        return new SuccessResult();
+    }
+
+    // 支付订单
+    @PostMapping("/pay")
+    public Result orderPay(@RequestBody Orders orders, double price) {
+        orders.setIsPay(1);
+        int i = orderService.orderPay(orders);
+        if (i <= 0) return new ErrorResult("订单已支付");
+        userScoreService.orderScore(orders.getId(), orders.getUserId(), price);
+        return new SuccessResult();
+    }
+
+
+    // 用户地址查询
+    @GetMapping("/address")
+    public Result queryAddress(int userId) {
+        List<UserAddress> list = orderService.selectAddress(userId);
+        return new SuccessResult(list);
+    }
+}

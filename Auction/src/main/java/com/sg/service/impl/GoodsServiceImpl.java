@@ -24,6 +24,7 @@ public class GoodsServiceImpl implements GoodsService {
     @Resource
     private GoodsDao goodsDao;
 
+
     public Object test() {
         return goodsDao.selectList(null);
     }
@@ -65,9 +66,10 @@ public class GoodsServiceImpl implements GoodsService {
     public int finishAuction(Goods goods) {
         UpdateWrapper<Goods> wrapper = new UpdateWrapper<>();
         wrapper.eq("id", goods.getId());
-        if (goods.getLastUserId() != 0)
+        if (goods.getLastUserId() != 0){
             wrapper.eq("last_user_id", goods.getLastUserId())
                     .set("finish", 1);
+        }
         else  wrapper.set("finish", -1);
         return goodsDao.update(null, wrapper);
     }

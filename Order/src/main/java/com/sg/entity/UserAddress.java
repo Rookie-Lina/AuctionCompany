@@ -11,6 +11,7 @@ import lombok.Data;
 @Data
 @TableName("users_address")
 public class UserAddress {
+
     private int id;
     private int userId;
     private String address;
