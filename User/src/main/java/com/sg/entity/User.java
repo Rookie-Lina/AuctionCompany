@@ -20,7 +20,8 @@ public class User {
     private Date birthday; // 生日
     private String userPhoto; // 会员头像
     private String userEmail; // 邮箱
-    private int userScore; // 用户积分
+    private int userScore; // 用户购物积分
     private int roleId; // 角色Id
     private String userPhone; // 手机号码
+    private int saleScore;//用户拍卖商品所得的积分
 }
