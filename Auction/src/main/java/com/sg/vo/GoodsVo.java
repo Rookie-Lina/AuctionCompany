@@ -1,18 +1,16 @@
-package com.sg.entity;
+package com.sg.vo;
 
 import lombok.Data;
 
 import java.util.Date;
 
 /**
- * @Description 商品列表
+ * @Description
  * @auther Rookie_lin
- * @create 2022-07-18 16:39
+ * @create 2022-07-22 15:39
  */
-
 @Data
-public class Goods {
-
+public class GoodsVo {
     private int id; // 自增ID
     private int userId; // 拍卖者ID
     private String goodsName; // 商品名称
@@ -24,6 +22,5 @@ public class Goods {
     private int goodTypeId; // 商品类别的ID
     private double nowPrice; // 商品的当前售价
     private int lastUserId; // 当前竞拍到最高拍卖价的用户ID
-    private Date raiseTime; // 最后一个买家的最高拍卖价的更新时间
-    private int finish; // 是否交易结束
+    private long raiseTime; // 最后一个买家的最高拍卖价的更新时间
 }

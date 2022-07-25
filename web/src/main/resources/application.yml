@@ -22,7 +22,6 @@ spring:
         min-idle: 0
         max-active: 8
         max-wait: -1
-    timeout: 0
     database: 0
     password: Lin058211.
 
@@ -31,6 +30,7 @@ mybatis-plus:
   configuration:
     # xml返回数据为map类型时，空值的key也要显示出来
     call-setters-on-nulls: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   global-config:
     db-config:
       id-type: auto
