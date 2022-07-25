@@ -8,12 +8,10 @@ import com.sg.result.impl.SuccessResult;
 import com.sg.service.GoodsService;
 import com.sg.vo.GoodsVo;
 import org.springframework.beans.BeanUtils;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -23,6 +21,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/goods")
+@PreAuthorize("hasAnyAuthority('NormalUser')")
 public class GoodsController {
 
     @Resource
@@ -30,6 +29,7 @@ public class GoodsController {
 
     // 查询 所有商品总数
     @GetMapping("/count")
+//    @PreAuthorize("hasAnyAuthority('NormalUser')")
     public Result queryGoodsCountByType(@RequestParam List<Integer> goodsType) {
         System.out.println(goodsType);
         int i = goodsService.goodsCount(goodsType);
@@ -38,6 +38,7 @@ public class GoodsController {
 
     //查询 分页分类查询商品
     @GetMapping("/list")
+//    @PreAuthorize("hasAnyAuthority('NormalUser')")
     public Result queryGoodsList(int current, @RequestParam List<Integer> goodsType) {
         IPage<Goods> goodsIPage = goodsService.selectGoodsList(current, 4, goodsType);
         return new SuccessResult(200, "查询成功", goodsIPage);
@@ -45,6 +46,7 @@ public class GoodsController {
 
     //根据ID查询商品信息查询商品信息
     @GetMapping("/id")
+//    @PreAuthorize("hasAnyAuthority('NormalUser')")
     public Result queryGoodById(int id) {
         Goods goods = goodsService.selectGoodById(id);
         GoodsVo goodsVo = new GoodsVo();
@@ -56,6 +58,7 @@ public class GoodsController {
 
     // 搜索商品
     @GetMapping("/search")
+//    @PreAuthorize("hasAnyAuthority('NormalUser')")
     public Result searchGoods( int current, String search) {
         IPage<Goods> goodsIPage = goodsService.selectGoodsListByName( current, 4, search);
         return new SuccessResult(goodsIPage);
@@ -63,6 +66,7 @@ public class GoodsController {
 
     // 用户出价竞拍
     @PostMapping("/auction")
+//    @PreAuthorize("hasAnyAuthority('NormalUser')")
     public Result auction(@RequestBody Goods goods) {
         // TODO 将竞拍商品存入redis中加快响应速度
         /**
@@ -76,6 +80,7 @@ public class GoodsController {
     }
 
     @PostMapping("/finish")
+//    @PreAuthorize("hasAnyAuthority('NormalUser')")
     public Result finishAuction(@RequestBody Goods goods) {
         if (goodsService.finishAuction(goods) <= 0)
             return new ErrorResult("错误");

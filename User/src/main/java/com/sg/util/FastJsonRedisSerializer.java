@@ -1,4 +1,4 @@
-package com.sg.config;
+package com.sg.util;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
