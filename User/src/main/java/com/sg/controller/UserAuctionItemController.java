@@ -1,0 +1,30 @@
+package com.sg.controller;
+
+import com.sg.result.Result;
+import com.sg.service.UserAuctionItemService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+/**
+ * 用户拍卖品
+ */
+@RestController
+@RequestMapping("/AuctionItem")
+public class UserAuctionItemController {
+    @Autowired
+    UserAuctionItemService userAuctionItemService;
+    /**
+     * 用户分页查询自己所有的拍品列表
+     * @return
+     */
+    @GetMapping("/GetAuctionItem")
+    @PreAuthorize("hasAnyAuthority('NormalUser')")
+    public Result getAuctionItem(Integer currentPage,Integer pageSize){
+        //获取用户所有的拍卖品信息
+        Result result=userAuctionItemService.getAll(currentPage,pageSize);
+        return null;
+    }
+}
