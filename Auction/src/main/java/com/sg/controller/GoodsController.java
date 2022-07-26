@@ -21,15 +21,15 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/goods")
-@PreAuthorize("hasAnyAuthority('NormalUser')")
+//@PreAuthorize("hasAnyAuthority('NormalUser')")
 public class GoodsController {
 
     @Resource
     private GoodsService goodsService;
 
+
     // 查询 所有商品总数
     @GetMapping("/count")
-//    @PreAuthorize("hasAnyAuthority('NormalUser')")
     public Result queryGoodsCountByType(@RequestParam List<Integer> goodsType) {
         System.out.println(goodsType);
         int i = goodsService.goodsCount(goodsType);
@@ -38,7 +38,6 @@ public class GoodsController {
 
     //查询 分页分类查询商品
     @GetMapping("/list")
-//    @PreAuthorize("hasAnyAuthority('NormalUser')")
     public Result queryGoodsList(int current, @RequestParam List<Integer> goodsType) {
         IPage<Goods> goodsIPage = goodsService.selectGoodsList(current, 4, goodsType);
         return new SuccessResult(200, "查询成功", goodsIPage);
@@ -46,27 +45,24 @@ public class GoodsController {
 
     //根据ID查询商品信息查询商品信息
     @GetMapping("/id")
-//    @PreAuthorize("hasAnyAuthority('NormalUser')")
     public Result queryGoodById(int id) {
         Goods goods = goodsService.selectGoodById(id);
         GoodsVo goodsVo = new GoodsVo();
-        BeanUtils.copyProperties(goods,goodsVo);
-        if (goods.getRaiseTime()!=null)
+        BeanUtils.copyProperties(goods, goodsVo);
+        if (goods.getRaiseTime() != null)
             goodsVo.setRaiseTime(goods.getRaiseTime().getTime());
         return new SuccessResult(goodsVo);
     }
 
     // 搜索商品
     @GetMapping("/search")
-//    @PreAuthorize("hasAnyAuthority('NormalUser')")
-    public Result searchGoods( int current, String search) {
-        IPage<Goods> goodsIPage = goodsService.selectGoodsListByName( current, 4, search);
+    public Result searchGoods(int current, String search) {
+        IPage<Goods> goodsIPage = goodsService.selectGoodsListByName(current, 4, search);
         return new SuccessResult(goodsIPage);
     }
 
     // 用户出价竞拍
     @PostMapping("/auction")
-//    @PreAuthorize("hasAnyAuthority('NormalUser')")
     public Result auction(@RequestBody Goods goods) {
         // TODO 将竞拍商品存入redis中加快响应速度
         /**
@@ -80,10 +76,11 @@ public class GoodsController {
     }
 
     @PostMapping("/finish")
-//    @PreAuthorize("hasAnyAuthority('NormalUser')")
     public Result finishAuction(@RequestBody Goods goods) {
         if (goodsService.finishAuction(goods) <= 0)
             return new ErrorResult("错误");
-        else return new SuccessResult("成功");
+        else {
+            return new SuccessResult("成功");
+        }
     }
 }

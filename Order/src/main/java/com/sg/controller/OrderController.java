@@ -59,6 +59,20 @@ public class OrderController {
         return new SuccessResult();
     }
 
+    // 完成订单
+    @PostMapping("/finish")
+    public Result orderFinish(int orderId) {
+        orderService.orderFinish(orderId);
+        return new SuccessResult("订单完成");
+    }
+
+    // 删除订单
+    @DeleteMapping("/{orderId}")
+    public Result orderDelete(@PathVariable int orderId) {
+        if (orderService.orderDelete(orderId) <= 0)
+            return new ErrorResult("未完成订单无法删除");
+        return new SuccessResult("订单删除成功");
+    }
 
     // 用户地址查询
     @GetMapping("/address")
@@ -66,4 +80,5 @@ public class OrderController {
         List<UserAddress> list = orderService.selectAddress(userId);
         return new SuccessResult(list);
     }
+
 }
