@@ -25,6 +25,16 @@ public class UserAuctionItemController {
     public Result getAuctionItem(Integer currentPage,Integer pageSize){
         //获取用户所有的拍卖品信息
         Result result=userAuctionItemService.getAll(currentPage,pageSize);
-        return null;
+        return result;
+    }
+
+    /**
+     * 查询用户的拍品总数
+     * @return
+     */
+    @GetMapping("/GetItemCount")
+    public Result getItemCount(){
+        Result result=userAuctionItemService.getItemCount();
+        return result;
     }
 }

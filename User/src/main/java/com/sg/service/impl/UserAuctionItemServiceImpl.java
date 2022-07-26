@@ -34,4 +34,17 @@ public class UserAuctionItemServiceImpl implements UserAuctionItemService {
         IPage<Goods> goodsIPage = goodsDao.selectPage(goodsPage, lambdaQueryWrapper);
         return new SuccessResult(200,"商品查询成功",goodsIPage);
     }
+
+    @Override
+    public Result getItemCount() {
+        //创建查询对象
+        LambdaQueryWrapper<Goods> lambdaQueryWrapper=new LambdaQueryWrapper<>();
+        //获取当前登录的用户信息
+        UsernamePasswordAuthenticationToken AuthenticatedUser= (UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
+        LoginUser principal = (LoginUser) AuthenticatedUser.getPrincipal();
+        int id = principal.getUser().getId();
+        lambdaQueryWrapper.eq(Goods::getUserId,id);
+        Integer integer = goodsDao.selectCount(lambdaQueryWrapper);
+        return new SuccessResult(200,"查询拍品总记录数成功！",integer);
+    }
 }

@@ -13,7 +13,7 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
  */
 
 
-@SpringBootApplication(exclude = SecurityAutoConfiguration.class)
+@SpringBootApplication
 public class AuctionCompany extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
