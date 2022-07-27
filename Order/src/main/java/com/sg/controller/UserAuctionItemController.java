@@ -37,4 +37,16 @@ public class UserAuctionItemController {
         Result result=userAuctionItemService.getItemCount();
         return result;
     }
+
+    /**
+     * 查看拍卖品的详细进展
+     * @param goodId
+     * @return
+     */
+    @GetMapping("/GetItemDeatail")
+    public Result getItemDetail(Integer goodId){
+        Result result=userAuctionItemService.getItemDetailByGoodId(goodId);
+        return result;
+    }
+
 }
