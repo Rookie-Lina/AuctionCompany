@@ -1,4 +1,4 @@
-package com.sg.utilObject;
+package com.sg.vo;
 
 import com.sg.entity.Goods;
 import com.sg.entity.Orders;
