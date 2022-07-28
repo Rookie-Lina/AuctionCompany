@@ -9,4 +9,6 @@ public interface UserAuctionItemService {
     Result getItemCount();
 
     Result getItemDetailByGoodId(Integer goodId);
+
+    Result getGoodsByType(Integer typeId,Integer pageSize);
 }

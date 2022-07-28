@@ -1,6 +1,8 @@
 package com.sg.controller;
 
+import com.sg.dao.GoodsDao;
 import com.sg.result.Result;
+import com.sg.service.GoodsService;
 import com.sg.service.UserAuctionItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -16,6 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserAuctionItemController {
     @Autowired
     UserAuctionItemService userAuctionItemService;
+    @Autowired
+    GoodsDao  goodsDao;
     /**
      * 用户分页查询自己所有的拍品列表
      * @return
@@ -46,6 +50,14 @@ public class UserAuctionItemController {
     @GetMapping("/GetItemDeatail")
     public Result getItemDetail(Integer goodId){
         Result result=userAuctionItemService.getItemDetailByGoodId(goodId);
+        return result;
+    }
+    /**
+     * 根据拍卖品品类别查询拍卖品信息
+     */
+    @GetMapping("/GetItemByType")
+    public Result getGoodsByType(Integer typeId,Integer  pagesize){
+        Result result= userAuctionItemService.getGoodsByType(typeId,pagesize);
         return result;
     }
 

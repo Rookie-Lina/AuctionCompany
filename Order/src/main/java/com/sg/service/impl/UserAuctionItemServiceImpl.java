@@ -76,6 +76,15 @@ public class UserAuctionItemServiceImpl implements UserAuctionItemService {
         UserAddress userAddress = userAddressDao.selectOne(userAddressLambdaQueryWrapper);
         ReturnObject returnObject=new ReturnObject(goods,orders,userAddress);
         Result result=new SuccessResult(200,"信息查询成功",returnObject);
-        return null;
+        return result;
+    }
+
+    @Override
+    public Result getGoodsByType(Integer typeId,Integer pageSize) {
+        LambdaQueryWrapper<Goods> lambdaQueryWrapper=new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(Goods::getGoodTypeId,typeId);
+        Page<Goods> goodsPage=new Page<>(1,pageSize);
+        IPage<Goods> goodsIPage = goodsDao.selectPage(goodsPage, lambdaQueryWrapper);
+        return new SuccessResult(200,"查询成功",goodsIPage);
     }
 }

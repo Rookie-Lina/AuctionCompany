@@ -25,6 +25,11 @@
             <artifactId>User</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>com.example</groupId>
+            <artifactId>Auction</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
 <!--    <build>-->
