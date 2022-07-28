@@ -24,4 +24,8 @@ public interface OrderService {
     void orderFinish(int orderId);
 
     int orderDelete(int orderId);
+
+    void orderDispatch(int orderId);
+
+    void orderDeliver(int orderId);
 }

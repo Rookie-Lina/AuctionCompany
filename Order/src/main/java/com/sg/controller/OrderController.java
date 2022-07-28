@@ -81,4 +81,17 @@ public class OrderController {
         return new SuccessResult(list);
     }
 
+    // 订单发货
+    @PostMapping("/dispatch")
+    public Result orderDispatch(int orderId){
+        orderService.orderDispatch(orderId);
+        return new SuccessResult("发货成功");
+    }
+
+    // 确认送达
+    @PostMapping("/deliver")
+    public Result orderDeliver(int orderId){
+        orderService.orderDeliver(orderId);
+        return new SuccessResult("已确认送达");
+    }
 }

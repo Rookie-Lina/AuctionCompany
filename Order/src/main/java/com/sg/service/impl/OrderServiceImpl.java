@@ -85,4 +85,20 @@ public class OrderServiceImpl implements OrderService {
         return ordersDao.delete(wrapper);
     }
 
+    @Override
+    public void orderDispatch(int orderId) {
+        UpdateWrapper<Orders> wrapper = new UpdateWrapper<>();
+        wrapper.eq("id",orderId)
+                .set("order_status",1);
+        ordersDao.update(null,wrapper);
+    }
+
+    @Override
+    public void orderDeliver(int orderId) {
+        UpdateWrapper<Orders> wrapper = new UpdateWrapper<>();
+        wrapper.eq("id",orderId)
+                .set("order_status",2);
+        ordersDao.update(null,wrapper);
+    }
+
 }
