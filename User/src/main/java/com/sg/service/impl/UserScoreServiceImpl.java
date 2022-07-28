@@ -27,7 +27,7 @@ public class UserScoreServiceImpl implements UserScoreService {
     private UserDao userDao;
 
     @Override
-    public void orderScore(int orderId, int userId,double price) {
+    public void orderApplyScore(int orderId, int userId,double price) {
         UserScore userScore = new UserScore();
         userScore.setUserId(userId);
         userScore.setDataId(orderId);

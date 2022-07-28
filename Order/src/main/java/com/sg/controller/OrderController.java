@@ -55,7 +55,7 @@ public class OrderController {
         orders.setIsPay(1);
         int i = orderService.orderPay(orders);
         if (i <= 0) return new ErrorResult("订单已支付");
-        userScoreService.orderScore(orders.getId(), orders.getUserId(), price);
+        userScoreService.orderApplyScore(orders.getId(), orders.getUserId(), price);
         return new SuccessResult();
     }
 

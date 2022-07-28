@@ -1,6 +1,7 @@
 package com.sg.service;
 
 import com.sg.entity.OrderRefunds;
+import com.sg.entity.User;
 
 /**
  * @Description
@@ -9,4 +10,6 @@ import com.sg.entity.OrderRefunds;
  */
 public interface OrderRefundService {
     void orderRefundApply(OrderRefunds orderRefunds);
+
+    void orderRefundProcess(User user, OrderRefunds orderRefunds);
 }

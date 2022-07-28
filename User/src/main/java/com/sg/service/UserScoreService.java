@@ -7,5 +7,5 @@ package com.sg.service;
  */
 public interface UserScoreService {
 
-    void orderScore(int userId,int orderId,double price);
+    void orderApplyScore(int userId,int orderId,double price);
 }

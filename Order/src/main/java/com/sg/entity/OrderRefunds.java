@@ -20,7 +20,7 @@ public class OrderRefunds {
     private String refundRemark; // 管理员退款备注
     private Date refundTime; // 管理员退款时间
     private String  shopRejectReason; // 店铺不同意拒收原因
-    private int refundStatus; // 退款状态 0：申请中 1：已退款 -1：已拒绝
+    private int refundStatus; // 退款状态 -1：已取消 0：申请中 1：已退款 2：已拒绝
     private Date createTime; // 用户申请退款时间
     private int backScore; // 待返回积分
 

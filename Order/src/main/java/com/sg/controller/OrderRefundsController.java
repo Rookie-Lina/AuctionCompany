@@ -1,6 +1,8 @@
 package com.sg.controller;
 
+import com.sg.bo.UserOrderRefundBo;
 import com.sg.entity.OrderRefunds;
+import com.sg.entity.User;
 import com.sg.result.Result;
 import com.sg.result.impl.SuccessResult;
 import com.sg.service.OrderRefundService;
@@ -28,5 +30,12 @@ public class OrderRefundsController {
     public Result orderReturn(@RequestBody OrderRefunds orderRefunds) {
         orderRefundService.orderRefundApply(orderRefunds);
         return new SuccessResult();
+    }
+
+    // 管理员处理退款订单
+    @PostMapping("/process")
+    public Result orderRefundProcess(@RequestBody UserOrderRefundBo userOrderRefundBo){
+        orderRefundService.orderRefundProcess(userOrderRefundBo.getUser(),userOrderRefundBo.getOrderRefunds());
+        return new SuccessResult("退款成功");
     }
 }
