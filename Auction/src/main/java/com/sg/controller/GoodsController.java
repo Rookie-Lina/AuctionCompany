@@ -8,11 +8,11 @@ import com.sg.result.impl.SuccessResult;
 import com.sg.service.GoodsService;
 import com.sg.vo.GoodsVo;
 import org.springframework.beans.BeanUtils;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @Description
@@ -38,8 +38,15 @@ public class GoodsController {
 
     //查询 分页分类查询商品
     @GetMapping("/list")
-    public Result queryGoodsList(int current, @RequestParam List<Integer> goodsType) {
-        IPage<Goods> goodsIPage = goodsService.selectGoodsList(current, 4, goodsType);
+    public Result queryGoodsList(int current, String goodsType, String search) {
+
+        IPage<Goods> goodsIPage = null;
+        if (Objects.equals(goodsType, "") && Objects.equals(search, ""))
+            goodsIPage = goodsService.selectGoodsListNo(current, 4);
+        else if (Objects.equals(goodsType, ""))
+            goodsIPage = goodsService.selectGoodsListByName(current,4,search);
+        else if (Objects.equals(search, ""))
+            goodsIPage = goodsService.selectGoodsListByType(current,4,goodsType);
         return new SuccessResult(200, "查询成功", goodsIPage);
     }
 
