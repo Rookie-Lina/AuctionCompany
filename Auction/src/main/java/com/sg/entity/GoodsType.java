@@ -14,5 +14,6 @@ public class GoodsType {
     private int id; // 自增ID
     private String typeName; // 商品类别名称
     private int grade; // 级别
-    private int parentId; // 上一级id
+    private int firstId; // 一级菜单ID
+    private int secondId; // 二级菜单ID
 }

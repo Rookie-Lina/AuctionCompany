@@ -16,7 +16,7 @@ public interface GoodsService {
 
     int goodsCount(List<Integer> goodsType);
 
-    IPage<Goods> selectGoodsList(int current, int size, List<Integer> goodsType);
+    IPage<Goods> selectGoodsListNo(int current, int size);
 
     Goods selectGoodById(int id);
 
@@ -27,4 +27,6 @@ public interface GoodsService {
     int goodsCountLikeName(String search);
 
     IPage<Goods> selectGoodsListByName(int current, int size, String search);
+
+    IPage<Goods> selectGoodsListByType(int current, int size, String goodsType);
 }

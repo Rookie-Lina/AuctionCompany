@@ -1,8 +1,11 @@
 package com.sg.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.sg.vo.OrderVo;
 import com.sg.entity.Orders;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 /**
  * @Description
@@ -11,4 +14,6 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface OrdersDao extends BaseMapper<Orders> {
+
+    List<OrderVo> selectOrderByStatus(int status);
 }
