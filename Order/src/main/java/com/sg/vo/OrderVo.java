@@ -15,6 +15,7 @@ public class OrderVo {
     private int id; // 自增ID
     private String orderNo; // 订单号
     private int userId; // 用户ID
+    private int goodsId; // 商品ID
     private String goodsName; // 商品名称
     private double goodsPrice; // 商品价钱
     private int addressId; // 收货地址ID

@@ -8,6 +8,7 @@
         select o.id,
                order_no,
                o.user_id,
+               g.id goods_id,
                goods_name,
                now_price goods_price,
                address_id,
@@ -18,6 +19,23 @@
                create_time
         from goods g
                  join orders o on g.id = o.goods_id
-        where order_status = #{status}
+        where order_status = #{status} and o.user_id = #{userId}
+    </select>
+    <select id="selectOrderById" resultType="com.sg.vo.OrderVo">
+        select o.id,
+               order_no,
+               o.user_id,
+               g.id goods_id,
+               goods_name,
+               now_price goods_price,
+               address_id,
+               deliver_type,
+               order_status,
+               pay_from,
+               order_remarks,
+               create_time
+        from goods g
+                 join orders o on g.id = o.goods_id
+        where o.user_id = #{userId} and order_status in (0,1,2,3,4)
     </select>
 </mapper>

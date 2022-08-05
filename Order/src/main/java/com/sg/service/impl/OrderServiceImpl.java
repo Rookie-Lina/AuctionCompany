@@ -46,8 +46,13 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<OrderVo> selectPaidListByStatus(int status) {
-        return ordersDao.selectOrderByStatus(status);
+    public List<OrderVo> selectPaidListByStatus(int status,int userId) {
+        return ordersDao.selectOrderByStatus(status,userId);
+    }
+
+    @Override
+    public List<OrderVo> selectPaidListByStatus(int userId) {
+        return ordersDao.selectOrderById(userId);
     }
 
     @Override
@@ -99,6 +104,14 @@ public class OrderServiceImpl implements OrderService {
         wrapper.eq("id",orderId)
                 .set("order_status",2);
         ordersDao.update(null,wrapper);
+    }
+
+    @Override
+    public Orders selectOrderById(int lastUserId, int id) {
+        QueryWrapper<Orders> wrapper = new QueryWrapper<>();
+        wrapper.eq("user_id",lastUserId)
+                .eq("goods_id",id);
+        return ordersDao.selectOne(wrapper);
     }
 
 }
