@@ -4,7 +4,11 @@ import lombok.Data;
 
 import java.util.List;
 
-
+/**
+ * @Description
+ * @auther Rookie_lin
+ * @create 2022-07-22 10:04
+ */
 @Data
 public class GoodsTypeVo {
 

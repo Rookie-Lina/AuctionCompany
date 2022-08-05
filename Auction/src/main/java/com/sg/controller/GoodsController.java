@@ -14,7 +14,11 @@ import javax.annotation.Resource;
 import java.util.List;
 import java.util.Objects;
 
-
+/**
+ * @Description
+ * @auther Rookie_lin
+ * @create 2022-07-19 11:00
+ */
 @RestController
 @RequestMapping("/goods")
 //@PreAuthorize("hasAnyAuthority('NormalUser')")
