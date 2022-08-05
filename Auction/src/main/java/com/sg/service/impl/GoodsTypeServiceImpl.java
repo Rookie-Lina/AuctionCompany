@@ -106,6 +106,7 @@ public class GoodsTypeServiceImpl implements GoodsTypeService {
         }
         if (goodsType.getGrade() == 3)
             wrapper.set("good_type_id", goodsType1.getSecondId());
+        goodsDao.update(null,wrapper);
         goodsTypeDao.deleteById(id);
         return true;
     }
