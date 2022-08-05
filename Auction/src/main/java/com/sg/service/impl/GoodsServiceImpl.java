@@ -16,11 +16,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-/**
- * @Description
- * @auther Rookie_lin
- * @create 2022-07-18 20:29
- */
+
 @Service
 public class GoodsServiceImpl implements GoodsService {
 

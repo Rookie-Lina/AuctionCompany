@@ -4,8 +4,6 @@ import lombok.Data;
 
 /**
  * @Description 商品类别
- * @auther Rookie_lin
- * @create 2022-07-18 18:07
  */
 
 @Data
