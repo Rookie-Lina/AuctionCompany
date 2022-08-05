@@ -130,5 +130,14 @@ public class GoodsServiceImpl implements GoodsService {
         goodsDao.selectPage(page,wrapper);
     }
 
+    @Override
+    public void selectGoodByLastUserId(int lastId, Page<Goods> page, int finish) {
+        QueryWrapper<Goods> wrapper = new QueryWrapper<>();
+        wrapper.eq("last_user_id",lastId);
+        if (finish!=-2)
+            wrapper.eq("finish",finish);
+        goodsDao.selectPage(page,wrapper);
+    }
+
 
 }

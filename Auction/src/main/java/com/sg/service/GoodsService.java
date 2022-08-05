@@ -28,4 +28,6 @@ public interface GoodsService {
     IPage<Goods> selectGoodsListByType(int current, int size, String goodsType);
 
     void selectGoodByUserId(int userId, Page<Goods> page,int finish);
+
+    void selectGoodByLastUserId(int lastId, Page<Goods> page, int finish);
 }

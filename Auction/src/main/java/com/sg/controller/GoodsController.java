@@ -67,6 +67,14 @@ public class GoodsController {
         return new SuccessResult(page);
     }
 
+    // 根据最终拍卖者Id查询商品信息
+    @GetMapping("/last-user")
+    public Result queryGoodByLastUserId(int lastId,long current,int finish){
+        Page<Goods> page = new Page<>(current,4);
+        goodsService.selectGoodByLastUserId(lastId,page,finish);
+        return new SuccessResult(page);
+    }
+
     // 搜索商品
     @GetMapping("/search")
     public Result searchGoods(int current, String search) {
