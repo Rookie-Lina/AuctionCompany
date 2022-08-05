@@ -1,6 +1,7 @@
 package com.sg.controller;
 
 
+import cn.hutool.core.util.IdUtil;
 import com.sg.dao.OrderRefundsDao;
 import com.sg.entity.Orders;
 import com.sg.result.Result;
@@ -37,6 +38,7 @@ public class TestController {
 
     @GetMapping("/aaa")
     public String aaa(){
+        System.out.println(IdUtil.getSnowflakeNextIdStr());
         return "aaa";
     }
 }
