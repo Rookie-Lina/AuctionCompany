@@ -6,6 +6,7 @@ import com.sg.result.Result;
 import com.sg.result.impl.ErrorResult;
 import com.sg.result.impl.SuccessResult;
 import com.sg.service.OrderService;
+import com.sg.service.UserAddressService;
 import com.sg.service.UserScoreService;
 import com.sg.vo.OrderVo;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,10 +31,27 @@ public class OrderController {
     @Resource
     private UserScoreService userScoreService;
 
+    @Resource
+    private UserAddressService userAddressService;
+
+    // 根据id查询地址信息
+    @GetMapping("/addrOne")
+    public Result userAddressById(int id) {
+        UserAddress userAddress = userAddressService.selectAddressById(id);
+        return new SuccessResult(userAddress);
+    }
+
     // 根据订单状态 查询订单
-    @GetMapping("/paid/{status}")
-    public Result unpaidList(@PathVariable int status) {
-        List<OrderVo> orderVos = orderService.selectPaidListByStatus(status);
+    @GetMapping("/list/{status}")
+    public Result orderList(@PathVariable int status, int userId) {
+        List<OrderVo> orderVos = orderService.selectPaidListByStatus(status, userId);
+        return new SuccessResult(orderVos);
+    }
+
+    // 根据已支付查询订单
+    @GetMapping("/list")
+    public Result orderList(int userId) {
+        List<OrderVo> orderVos = orderService.selectPaidListByStatus(userId);
         return new SuccessResult(orderVos);
     }
 
@@ -41,10 +59,15 @@ public class OrderController {
     @PostMapping("/create")
     public Result createOrder(int lastUserId, int id) {
         if (lastUserId != 0) {
-            Orders order = new Orders();
+            // 防止重复提交
+            Orders order = orderService.selectOrderById(lastUserId, id);
+            if (order != null)
+                return new ErrorResult("请不要重复提交");
+            order = new Orders();
             order.setUserId(lastUserId);
             order.setGoodsId(id);
             orderService.createOrder(order);
+
         }
         return new SuccessResult();
     }
@@ -53,6 +76,7 @@ public class OrderController {
     @PostMapping("/pay")
     public Result orderPay(@RequestBody Orders orders, double price) {
         orders.setIsPay(1);
+        orders.setOrderStatus(0);
         int i = orderService.orderPay(orders);
         if (i <= 0) return new ErrorResult("订单已支付");
         userScoreService.orderApplyScore(orders.getId(), orders.getUserId(), price);
@@ -83,14 +107,14 @@ public class OrderController {
 
     // 订单发货
     @PostMapping("/dispatch")
-    public Result orderDispatch(int orderId){
+    public Result orderDispatch(int orderId) {
         orderService.orderDispatch(orderId);
         return new SuccessResult("发货成功");
     }
 
     // 确认送达
     @PostMapping("/deliver")
-    public Result orderDeliver(int orderId){
+    public Result orderDeliver(int orderId) {
         orderService.orderDeliver(orderId);
         return new SuccessResult("已确认送达");
     }

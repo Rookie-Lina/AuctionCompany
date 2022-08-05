@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.sg.vo.OrderVo;
 import com.sg.entity.Orders;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -15,5 +16,7 @@ import java.util.List;
 @Mapper
 public interface OrdersDao extends BaseMapper<Orders> {
 
-    List<OrderVo> selectOrderByStatus(int status);
+    List<OrderVo> selectOrderByStatus(@Param("status") int status,@Param("userId") int userId);
+
+    List<OrderVo> selectOrderById(int userId);
 }

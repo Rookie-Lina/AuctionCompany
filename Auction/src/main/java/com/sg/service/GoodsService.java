@@ -1,6 +1,7 @@
 package com.sg.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sg.entity.Goods;
 
 import java.util.List;
@@ -25,4 +26,8 @@ public interface GoodsService {
     IPage<Goods> selectGoodsListByName(int current, int size, String search);
 
     IPage<Goods> selectGoodsListByType(int current, int size, String goodsType);
+
+    void selectGoodByUserId(int userId, Page<Goods> page,int finish);
+
+    void selectGoodByLastUserId(int lastId, Page<Goods> page, int finish);
 }

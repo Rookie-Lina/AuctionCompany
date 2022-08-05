@@ -1,12 +1,14 @@
 package com.sg.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sg.entity.Goods;
 import com.sg.result.Result;
 import com.sg.result.impl.ErrorResult;
 import com.sg.result.impl.SuccessResult;
 import com.sg.service.GoodsService;
 import com.sg.vo.GoodsVo;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,9 +42,9 @@ public class GoodsController {
         if (Objects.equals(goodsType, "") && Objects.equals(search, ""))
             goodsIPage = goodsService.selectGoodsListNo(current, 4);
         else if (Objects.equals(goodsType, ""))
-            goodsIPage = goodsService.selectGoodsListByName(current,4,search);
+            goodsIPage = goodsService.selectGoodsListByName(current, 4, search);
         else if (Objects.equals(search, ""))
-            goodsIPage = goodsService.selectGoodsListByType(current,4,goodsType);
+            goodsIPage = goodsService.selectGoodsListByType(current, 4, goodsType);
         return new SuccessResult(200, "查询成功", goodsIPage);
     }
 
@@ -55,6 +57,22 @@ public class GoodsController {
         if (goods.getRaiseTime() != null)
             goodsVo.setRaiseTime(goods.getRaiseTime().getTime());
         return new SuccessResult(goodsVo);
+    }
+
+    // 根据卖家Id查询商品信息
+    @GetMapping("/user")
+    public Result queryGoodByUserId(int userId,long current,int finish) {
+        Page<Goods> page = new Page<>(current,4);
+        goodsService.selectGoodByUserId(userId,page,finish);
+        return new SuccessResult(page);
+    }
+
+    // 根据最终拍卖者Id查询商品信息
+    @GetMapping("/last-user")
+    public Result queryGoodByLastUserId(int lastId,long current,int finish){
+        Page<Goods> page = new Page<>(current,4);
+        goodsService.selectGoodByLastUserId(lastId,page,finish);
+        return new SuccessResult(page);
     }
 
     // 搜索商品
