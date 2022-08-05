@@ -16,7 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/goods-type")
-//@PreAuthorize("hasAnyAuthority('NormalUser')")
+@PreAuthorize("hasAnyAuthority('NormalUser')")
 public class GoodsTypeController {
 
     @Resource
