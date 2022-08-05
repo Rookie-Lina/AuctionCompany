@@ -10,6 +10,7 @@ import com.sg.entity.Goods;
 import com.sg.entity.GoodsType;
 import com.sg.service.GoodsService;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -118,6 +119,15 @@ public class GoodsServiceImpl implements GoodsService {
             wrapper.in("good_type_id",list);
         }
         return goodsDao.selectPage(page, wrapper);
+    }
+
+    @Override
+    public void selectGoodByUserId(int userId,Page<Goods> page,int finish) {
+        QueryWrapper<Goods> wrapper = new QueryWrapper<>();
+        wrapper.eq("user_id",userId);
+        if (finish!=-2)
+            wrapper.eq("finish",finish);
+        goodsDao.selectPage(page,wrapper);
     }
 
 

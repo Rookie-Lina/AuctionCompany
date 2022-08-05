@@ -12,7 +12,6 @@ import java.util.Date;
 
 @Data
 public class Goods {
-
     private int id; // 自增ID
     private int userId; // 拍卖者ID
     private String goodsName; // 商品名称
