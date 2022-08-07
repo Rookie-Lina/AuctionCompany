@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -50,7 +51,8 @@ public class OrderController {
 
     // 根据已支付查询订单
     @GetMapping("/list")
-    public Result orderList(int userId) {
+    public Result orderList(HttpServletRequest request) {
+        int userId = (int) request.getAttribute("userId");
         List<OrderVo> orderVos = orderService.selectPaidListByStatus(userId);
         return new SuccessResult(orderVos);
     }

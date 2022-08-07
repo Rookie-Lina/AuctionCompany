@@ -1,9 +1,9 @@
 package com.sg.filter;
 
 import com.sg.entity.RedisCache;
-import com.sg.hander.IllegalityException;
-import com.sg.hander.InvalidException;
+import com.sg.result.impl.SuccessResult;
 import com.sg.util.JwtUtil;
+import com.sg.util.RenderUtils;
 import com.sg.utilObject.LoginUser;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.net.SocketTimeoutException;
 import java.util.Objects;
 
 @Component
@@ -43,14 +42,15 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
             Claims claims = JwtUtil.parseJWT(token);
             userLoginName = claims.getSubject();
         } catch (Exception e) {
-            e.printStackTrace();
-            throw new IllegalityException();
+            RenderUtils.renderJson(response,new SuccessResult(401,"非法token"));
+            return;
         }
         //从redis中获取用户信息
         String redisKey = "login:" + userLoginName;
         LoginUser loginUser = redisCache.getCacheObject(redisKey);
         if(Objects.isNull(loginUser)){
-            throw new InvalidException();
+            RenderUtils.renderJson(response,new SuccessResult(401,"token过期"));
+            return;
         }
         //存入SecurityContextHolder
         //TODO 获取权限信息封装到Authentication中

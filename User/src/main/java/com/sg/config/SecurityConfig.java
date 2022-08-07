@@ -1,6 +1,7 @@
 package com.sg.config;
 
 import com.sg.filter.JwtAuthenticationTokenFilter;
+import com.sg.handler.SimpleAccessDeniedHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -40,6 +41,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/users").permitAll()
                 // 除上面外的所有请求全部需要鉴权认证
                 .anyRequest().authenticated();
+        // 设置自定义权限不足返回类 403
+        http.exceptionHandling().accessDeniedHandler(new SimpleAccessDeniedHandler());
         http.addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
