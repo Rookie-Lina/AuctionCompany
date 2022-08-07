@@ -25,6 +25,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -52,7 +53,7 @@ public class UserServiceImpl implements UserService {
         map.put("token",jwt);
         map.put("username",user.getLoginName());
 //        //authenticate存入redis
-        redisCache.setCacheObject("login:"+loginUser.getUser().getLoginName(),loginUser);
+        redisCache.setCacheObject("login:"+loginUser.getUser().getLoginName(),loginUser,30, TimeUnit.MINUTES);
 //        //把token响应给前端
         return new SuccessResult(200,"登录成功！",map);
     }

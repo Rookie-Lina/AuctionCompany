@@ -12,6 +12,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Objects;
 
@@ -23,6 +24,12 @@ public class GoodsController {
 
     @Resource
     private GoodsService goodsService;
+
+    @GetMapping("/ttt")
+    public Result ttt(HttpServletRequest request){
+        System.out.println("userId: "+request.getAttribute("userId"));
+        return new SuccessResult();
+    }
 
     // 添加商品
     @PostMapping("/add")
@@ -67,7 +74,8 @@ public class GoodsController {
 
     // 根据卖家Id查询商品信息
     @GetMapping("/user")
-    public Result queryGoodByUserId(int userId, long current, int finish) {
+    public Result queryGoodByUserId(HttpServletRequest request, long current, int finish) {
+        int userId = (int) request.getAttribute("userId");
         Page<Goods> page = new Page<>(current, 4);
         goodsService.selectGoodByUserId(userId, page, finish);
         return new SuccessResult(page);

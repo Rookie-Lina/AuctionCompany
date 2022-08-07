@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.UUID;
@@ -25,8 +26,8 @@ public class FileController {
     private OssUtils ossUtils;
 
     @PostMapping("/upload")
-    public Result fileUpload(@RequestParam("file") MultipartFile file,int userId){
-        System.out.println(userId);
+    public Result fileUpload(@RequestParam("file") MultipartFile file, HttpServletRequest request){
+        int userId = (int) request.getAttribute("userId");
         InputStream inputStream;
         try {
             inputStream = file.getInputStream();
