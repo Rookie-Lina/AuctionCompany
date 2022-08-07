@@ -1,11 +1,12 @@
 package com.sg.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sg.dao.UserDao;
 import com.sg.dao.UserPermissionDao;
 import com.sg.entity.RedisCache;
 import com.sg.entity.User;
-import com.sg.entity.UserPermission;
 import com.sg.result.Result;
 import com.sg.result.impl.ErrorResult;
 import com.sg.result.impl.SuccessResult;
@@ -23,6 +24,7 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Scanner;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -48,10 +50,11 @@ public class UserServiceImpl implements UserService {
         String jwt = JwtUtil.createJWT(loginUser.getUser().getLoginName());
         Map<String,String> map=new HashMap<>();
         map.put("token",jwt);
+        map.put("username",user.getLoginName());
 //        //authenticate存入redis
         redisCache.setCacheObject("login:"+loginUser.getUser().getLoginName(),loginUser);
 //        //把token响应给前端
-        return new SuccessResult(200,"登录成功！",jwt);
+        return new SuccessResult(200,"登录成功！",map);
     }
 
     @Override
@@ -112,5 +115,46 @@ public class UserServiceImpl implements UserService {
         //删除用户信息
         int delete = userDao.delete(lambdaQueryWrapper);
         return new  SuccessResult(200,"删除成功！");
+    }
+
+    @Override
+    public Result getUsers(Integer current, Integer pageSize) {
+        Page<User> page=new Page<>(current,pageSize);
+        LambdaQueryWrapper<User> lambdaQueryWrapper=new LambdaQueryWrapper<>();
+        IPage<User> userIPage = userDao.selectPage(page, lambdaQueryWrapper);
+        return new SuccessResult(200,"查询成功",userIPage);
+    }
+
+    /**
+     * 根据用户id查询用户信息
+     * @param i
+     * @return
+     */
+    @Override
+    public Result getUserById(int i) {
+        LambdaQueryWrapper<User> lambdaQueryWrapper=new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(User::getId,i);
+        User user = userDao.selectOne(lambdaQueryWrapper);
+        return new SuccessResult(200,"已查询到用户信息",user);
+    }
+
+    @Override
+    public Result deleteUserById(int i) {
+        LambdaQueryWrapper<User> lambdaQueryWrapper=new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(User::getId,i);
+        int delete = userDao.delete(lambdaQueryWrapper);
+        return new SuccessResult(200,"删除成功");
+    }
+
+    @Override
+    public Result updateUserInfo(User user) {
+        BCryptPasswordEncoder bCryptPasswordEncoder=new BCryptPasswordEncoder();
+        String loginPwd = user.getLoginPwd();
+        String encode = bCryptPasswordEncoder.encode(loginPwd);
+        user.setLoginPwd(encode);
+        LambdaQueryWrapper<User> lambdaQueryWrapper=new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(User::getId,user.getId());
+        int update = userDao.update(user, lambdaQueryWrapper);
+        return new SuccessResult(200,"更新成功",user);
     }
 }
