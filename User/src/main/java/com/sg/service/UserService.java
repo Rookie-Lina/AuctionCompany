@@ -11,4 +11,12 @@ public interface UserService {
     Result register(User user);
 
     Result deleteUserByLoginName(User user);
+
+    Result getUsers(Integer current, Integer pageSize);
+
+    Result getUserById(int i);
+
+    Result deleteUserById(int i);
+
+    Result updateUserInfo(User user);
 }
