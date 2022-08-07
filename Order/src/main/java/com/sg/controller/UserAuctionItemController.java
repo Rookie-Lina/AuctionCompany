@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/AuctionItem")
 public class UserAuctionItemController {
+
     @Autowired
     UserAuctionItemService userAuctionItemService;
     @Autowired
@@ -25,7 +26,7 @@ public class UserAuctionItemController {
      * @return
      */
     @GetMapping("/GetAuctionItem")
-    @PreAuthorize("hasAnyAuthority('NormalUser')")
+//    @PreAuthorize("hasAnyAuthority('NormalUser')")
     public Result getAuctionItem(Integer currentPage,Integer pageSize){
         //获取用户所有的拍卖品信息
         Result result=userAuctionItemService.getAll(currentPage,pageSize);

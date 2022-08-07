@@ -34,3 +34,13 @@ mybatis-plus:
   global-config:
     db-config:
       id-type: auto
+
+# 阿里云OSS存储器
+aliyun:
+  oss:
+    file:
+      endpoint: oss-cn-qingdao.aliyuncs.com
+      keyId: LTAI5tCevyhHN1KjZmjVRMvq
+      keySecret: zaADdSZ6yjKswrNioE9Bsa9H7a9LP0
+      dirName: auction_company
+      bucketName: rookie-lin

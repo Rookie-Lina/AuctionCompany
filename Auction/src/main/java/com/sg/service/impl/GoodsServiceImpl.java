@@ -10,7 +10,6 @@ import com.sg.entity.Goods;
 import com.sg.entity.GoodsType;
 import com.sg.service.GoodsService;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -101,42 +100,49 @@ public class GoodsServiceImpl implements GoodsService {
         // 根据 goodsType 的拼接值 选出 第三级类别的id
         if (split[0].equals("3")) {
             wrapper.eq("good_type_id", split[1]);
-        } else if(split[0].equals("1")) {
+        } else if (split[0].equals("1")) {
             QueryWrapper<GoodsType> wrapper1 = new QueryWrapper<>();
-            wrapper1.eq("first_id",split[1])
-                    .eq("grade",3);
+            wrapper1.eq("first_id", split[1])
+                    .eq("grade", 3);
             List<GoodsType> goodsTypes = goodsTypeDao.selectList(wrapper1);
             List<Integer> list = new ArrayList<>();
-            goodsTypes.forEach(i->list.add(i.getId()));
-            wrapper.in("good_type_id",list);
-        }else{
+            goodsTypes.forEach(i -> list.add(i.getId()));
+            wrapper.in("good_type_id", list);
+        } else {
             QueryWrapper<GoodsType> wrapper1 = new QueryWrapper<>();
-            wrapper1.eq("second_id",split[1])
-                    .eq("grade",3);
+            wrapper1.eq("second_id", split[1])
+                    .eq("grade", 3);
             List<GoodsType> goodsTypes = goodsTypeDao.selectList(wrapper1);
             List<Integer> list = new ArrayList<>();
-            goodsTypes.forEach(i->list.add(i.getId()));
-            wrapper.in("good_type_id",list);
+            goodsTypes.forEach(i -> list.add(i.getId()));
+            wrapper.in("good_type_id", list);
         }
         return goodsDao.selectPage(page, wrapper);
     }
 
     @Override
-    public void selectGoodByUserId(int userId,Page<Goods> page,int finish) {
+    public void selectGoodByUserId(int userId, Page<Goods> page, int finish) {
         QueryWrapper<Goods> wrapper = new QueryWrapper<>();
-        wrapper.eq("user_id",userId);
-        if (finish!=-2)
-            wrapper.eq("finish",finish);
-        goodsDao.selectPage(page,wrapper);
+        wrapper.eq("user_id", userId);
+        if (finish != -4)
+            wrapper.eq("finish", finish);
+        goodsDao.selectPage(page, wrapper);
     }
 
     @Override
     public void selectGoodByLastUserId(int lastId, Page<Goods> page, int finish) {
         QueryWrapper<Goods> wrapper = new QueryWrapper<>();
-        wrapper.eq("last_user_id",lastId);
-        if (finish!=-2)
-            wrapper.eq("finish",finish);
-        goodsDao.selectPage(page,wrapper);
+        wrapper.eq("last_user_id", lastId);
+        if (finish != -4)
+            wrapper.eq("finish", finish);
+        goodsDao.selectPage(page, wrapper);
+    }
+
+    @Override
+    public void addGoods(Goods goods) {
+        goods.setFinish(-3);
+        goods.setNowPrice(goods.getStartingPrice());
+        goodsDao.insert(goods);
     }
 
 

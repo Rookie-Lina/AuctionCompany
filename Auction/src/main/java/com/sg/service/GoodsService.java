@@ -30,4 +30,6 @@ public interface GoodsService {
     void selectGoodByUserId(int userId, Page<Goods> page,int finish);
 
     void selectGoodByLastUserId(int lastId, Page<Goods> page, int finish);
+
+    void addGoods(Goods goods);
 }

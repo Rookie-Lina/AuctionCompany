@@ -36,7 +36,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/user/login").anonymous()
                 .antMatchers("/user/register").anonymous()
                 //对于测试接口user,有没有token都可以访问
-                .antMatchers("/users","/goods/*","/order/**","/address/**","/AuctionItem/**").permitAll()
+                .antMatchers("/file/**","/users","/goods/*","/order/**","/address/**","/AuctionItem/**","/goods-type/**").permitAll()
                 // 除上面外的所有请求全部需要鉴权认证
                 .anyRequest().authenticated();
         http.addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);

@@ -8,7 +8,6 @@ import com.sg.result.impl.ErrorResult;
 import com.sg.result.impl.SuccessResult;
 import com.sg.service.GoodsService;
 import com.sg.vo.GoodsVo;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,6 +24,12 @@ public class GoodsController {
     @Resource
     private GoodsService goodsService;
 
+    // 添加商品
+    @PostMapping("/add")
+    public Result addGoods(@RequestBody Goods goods) {
+        goodsService.addGoods(goods);
+        return new SuccessResult();
+    }
 
     // 查询 所有商品总数
     @GetMapping("/count")
@@ -52,6 +57,7 @@ public class GoodsController {
     @GetMapping("/id")
     public Result queryGoodById(int id) {
         Goods goods = goodsService.selectGoodById(id);
+        if (goods.getFinish() != 0) return new ErrorResult("该商品审核中");
         GoodsVo goodsVo = new GoodsVo();
         BeanUtils.copyProperties(goods, goodsVo);
         if (goods.getRaiseTime() != null)
@@ -61,17 +67,17 @@ public class GoodsController {
 
     // 根据卖家Id查询商品信息
     @GetMapping("/user")
-    public Result queryGoodByUserId(int userId,long current,int finish) {
-        Page<Goods> page = new Page<>(current,4);
-        goodsService.selectGoodByUserId(userId,page,finish);
+    public Result queryGoodByUserId(int userId, long current, int finish) {
+        Page<Goods> page = new Page<>(current, 4);
+        goodsService.selectGoodByUserId(userId, page, finish);
         return new SuccessResult(page);
     }
 
     // 根据最终拍卖者Id查询商品信息
     @GetMapping("/last-user")
-    public Result queryGoodByLastUserId(int lastId,long current,int finish){
-        Page<Goods> page = new Page<>(current,4);
-        goodsService.selectGoodByLastUserId(lastId,page,finish);
+    public Result queryGoodByLastUserId(int lastId, long current, int finish) {
+        Page<Goods> page = new Page<>(current, 4);
+        goodsService.selectGoodByLastUserId(lastId, page, finish);
         return new SuccessResult(page);
     }
 
