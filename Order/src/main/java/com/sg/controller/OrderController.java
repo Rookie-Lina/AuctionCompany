@@ -69,7 +69,6 @@ public class OrderController {
             order.setUserId(lastUserId);
             order.setGoodsId(id);
             orderService.createOrder(order);
-
         }
         return new SuccessResult();
     }

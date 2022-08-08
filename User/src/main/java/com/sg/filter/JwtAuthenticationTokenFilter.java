@@ -42,7 +42,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
             Claims claims = JwtUtil.parseJWT(token);
             userLoginName = claims.getSubject();
         } catch (Exception e) {
-            RenderUtils.renderJson(response,new SuccessResult(401,"非法token"));
+            RenderUtils.renderJson(response,new SuccessResult(401,"token过期"));
             return;
         }
         //从redis中获取用户信息

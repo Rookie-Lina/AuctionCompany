@@ -53,26 +53,9 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
 
-    // 竞拍商品
-    public int auction(Goods goods) {
-        UpdateWrapper<Goods> wrapper = new UpdateWrapper<>();
-        wrapper.eq("id", goods.getId())
-                .set("now_price", goods.getNowPrice())
-                .set("last_user_id", goods.getLastUserId())
-                .set("raise_time", new Date());
-        return goodsDao.update(null, wrapper);
-    }
 
-    @Override
-    public int finishAuction(Goods goods) {
-        UpdateWrapper<Goods> wrapper = new UpdateWrapper<>();
-        wrapper.eq("id", goods.getId());
-        if (goods.getLastUserId() != 0) {
-            wrapper.eq("last_user_id", goods.getLastUserId())
-                    .set("finish", 1);
-        } else wrapper.set("finish", -1);
-        return goodsDao.update(null, wrapper);
-    }
+
+
 
     @Override
     public int goodsCountLikeName(String search) {

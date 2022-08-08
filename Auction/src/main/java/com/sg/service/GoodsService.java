@@ -17,10 +17,6 @@ public interface GoodsService {
 
     Goods selectGoodById(int id);
 
-    int auction(Goods goods);
-
-    int finishAuction(Goods goods);
-
     int goodsCountLikeName(String search);
 
     IPage<Goods> selectGoodsListByName(int current, int size, String search);

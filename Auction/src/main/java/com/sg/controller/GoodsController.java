@@ -9,6 +9,7 @@ import com.sg.result.impl.SuccessResult;
 import com.sg.service.GoodsService;
 import com.sg.vo.GoodsVo;
 import org.springframework.beans.BeanUtils;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -19,7 +20,7 @@ import java.util.Objects;
 
 @RestController
 @RequestMapping("/goods")
-//@PreAuthorize("hasAnyAuthority('NormalUser')")
+@PreAuthorize("hasAnyAuthority('NormalUser')")
 public class GoodsController {
 
     @Resource
@@ -64,7 +65,7 @@ public class GoodsController {
     @GetMapping("/id")
     public Result queryGoodById(int id) {
         Goods goods = goodsService.selectGoodById(id);
-        if (goods.getFinish() != 0) return new ErrorResult("该商品审核中");
+        if (goods.getFinish() < 0 ) return new ErrorResult("该商品审核中");
         GoodsVo goodsVo = new GoodsVo();
         BeanUtils.copyProperties(goods, goodsVo);
         if (goods.getRaiseTime() != null)
@@ -96,26 +97,7 @@ public class GoodsController {
         return new SuccessResult(goodsIPage);
     }
 
-    // 用户出价竞拍
-    @PostMapping("/auction")
-    public Result auction(@RequestBody Goods goods) {
-        // TODO 将竞拍商品存入redis中加快响应速度
-        /**
-         *  key : goods-auction+id
-         *  value: hash :
-         *          nowPrice,lastUserId,raiseTime
-         */
-        if (goods.getLastUserId() == goods.getUserId() || goodsService.auction(goods) <= 0)
-            return new ErrorResult("出价错误");
-        else return new SuccessResult("出价成功");
-    }
 
-    @PostMapping("/finish")
-    public Result finishAuction(@RequestBody Goods goods) {
-        if (goodsService.finishAuction(goods) <= 0)
-            return new ErrorResult("错误");
-        else {
-            return new SuccessResult("成功");
-        }
-    }
+
+
 }
