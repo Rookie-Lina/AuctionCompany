@@ -97,7 +97,18 @@ public class GoodsController {
         return new SuccessResult(goodsIPage);
     }
 
+    // 申请重新竞拍
+    @PostMapping("/reApply")
+    public Result reApply(int id){
+        goodsService.reApply(id);
+        return new SuccessResult();
+    }
 
-
+    // 删除商品
+    @DeleteMapping("/{id}")
+    public Result deleteGoods(@PathVariable int id){
+        goodsService.deleteGoods(id);
+        return new SuccessResult();
+    }
 
 }

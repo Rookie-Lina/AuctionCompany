@@ -28,4 +28,8 @@ public interface GoodsService {
     void selectGoodByLastUserId(int lastId, Page<Goods> page, int finish);
 
     void addGoods(Goods goods);
+
+    void reApply(int id);
+
+    void deleteGoods(int id);
 }

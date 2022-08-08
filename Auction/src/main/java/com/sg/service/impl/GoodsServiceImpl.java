@@ -52,11 +52,6 @@ public class GoodsServiceImpl implements GoodsService {
         return goodsDao.selectById(id);
     }
 
-
-
-
-
-
     @Override
     public int goodsCountLikeName(String search) {
         QueryWrapper<Goods> wrapper = new QueryWrapper<>();
@@ -126,6 +121,21 @@ public class GoodsServiceImpl implements GoodsService {
         goods.setFinish(-3);
         goods.setNowPrice(goods.getStartingPrice());
         goodsDao.insert(goods);
+    }
+
+    @Override
+    public void reApply(int id) {
+        UpdateWrapper<Goods> wrapper = new UpdateWrapper<>();
+        wrapper.eq("id",id)
+                .set("finish",-3);
+        goodsDao.update(null,wrapper);
+    }
+
+    @Override
+    public void deleteGoods(int id) {
+        QueryWrapper<Goods> wrapper = new QueryWrapper<>();
+        wrapper.eq("id",id);
+        goodsDao.delete(wrapper);
     }
 
 
