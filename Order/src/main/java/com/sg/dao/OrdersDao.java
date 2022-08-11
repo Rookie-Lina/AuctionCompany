@@ -19,4 +19,6 @@ public interface OrdersDao extends BaseMapper<Orders> {
     List<OrderVo> selectOrderByStatus(@Param("status") int status,@Param("userId") int userId);
 
     List<OrderVo> selectOrderById(int userId);
+
+    void deliver(Integer id);
 }

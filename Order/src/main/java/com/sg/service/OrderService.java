@@ -2,6 +2,7 @@ package com.sg.service;
 
 import com.sg.entity.Orders;
 import com.sg.entity.UserAddress;
+import com.sg.result.Result;
 import com.sg.vo.OrderVo;
 
 import java.util.List;
@@ -32,4 +33,8 @@ public interface OrderService {
     void orderDeliver(int orderId);
 
     Orders selectOrderById(int lastUserId, int id);
+
+    Result listOrder(int current, int pageSize,int type);
+
+    Result deliver(Integer id);
 }

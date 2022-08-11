@@ -119,4 +119,17 @@ public class OrderController {
         orderService.orderDeliver(orderId);
         return new SuccessResult("已确认送达");
     }
+    //分页查询订单
+    @GetMapping("/pageOrder")
+    public Result pageOrder(int current,int pageSize,int type){
+        System.out.println(current+"----"+pageSize);
+        return orderService.listOrder(current,pageSize,type);
+
+    }
+    //发货
+    @PostMapping("/StartDeliver")
+    public Result  deliver(Integer id){
+        return orderService.deliver(id);
+    }
+
 }
