@@ -112,7 +112,7 @@ public class OrderServiceImpl implements OrderService {
     public void orderDeliver(int orderId) {
         UpdateWrapper<Orders> wrapper = new UpdateWrapper<>();
         wrapper.eq("id",orderId)
-                .set("order_status",2);
+                .set("order_status",3);
         ordersDao.update(null,wrapper);
     }
 
