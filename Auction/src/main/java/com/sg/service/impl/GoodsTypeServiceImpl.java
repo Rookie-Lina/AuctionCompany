@@ -1,11 +1,16 @@
 package com.sg.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sg.dao.GoodsDao;
 import com.sg.dao.GoodsTypeDao;
 import com.sg.entity.Goods;
 import com.sg.entity.GoodsType;
+import com.sg.result.Result;
+import com.sg.result.impl.SuccessResult;
 import com.sg.service.GoodsTypeService;
 import com.sg.vo.GoodsTypeVo;
 import org.springframework.stereotype.Service;
@@ -109,5 +114,15 @@ public class GoodsTypeServiceImpl implements GoodsTypeService {
         goodsDao.update(null,wrapper);
         goodsTypeDao.deleteById(id);
         return true;
+    }
+
+    @Override
+    public Result goodsTypeListPage(String current, String pageSize) {
+        int i = Integer.parseInt(current);
+        int i1 = Integer.parseInt(pageSize);
+        IPage<GoodsType> iPage=new Page<>(i,i1);
+        LambdaQueryWrapper<GoodsType> lambdaQueryWrapper=new LambdaQueryWrapper();
+        IPage<GoodsType> iPage1 = goodsTypeDao.selectPage(iPage, lambdaQueryWrapper);
+        return new SuccessResult(200,"查询商品类别信息成功",iPage1);
     }
 }
