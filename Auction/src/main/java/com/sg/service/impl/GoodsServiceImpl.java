@@ -1,5 +1,6 @@
 package com.sg.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -8,6 +9,8 @@ import com.sg.dao.GoodsDao;
 import com.sg.dao.GoodsTypeDao;
 import com.sg.entity.Goods;
 import com.sg.entity.GoodsType;
+import com.sg.result.Result;
+import com.sg.result.impl.SuccessResult;
 import com.sg.service.GoodsService;
 import org.springframework.stereotype.Service;
 
@@ -121,6 +124,31 @@ public class GoodsServiceImpl implements GoodsService {
         goods.setFinish(-3);
         goods.setNowPrice(goods.getStartingPrice());
         goodsDao.insert(goods);
+    }
+
+    @Override
+    public Result findUnCheckedGoodsList(Integer current, Integer pageSize) {
+        System.out.println(current);
+        System.out.println("----------");
+        System.out.println(pageSize);
+        IPage<Goods> page=new Page<>(current,pageSize);
+        LambdaQueryWrapper<Goods>  lambdaQueryWrapper=new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(Goods::getFinish,-3);
+        IPage<Goods> page1 = goodsDao.selectPage(page, lambdaQueryWrapper);
+        return new SuccessResult(200,"查询成功",page1);
+    }
+
+    @Override
+    public Result pass(Integer id,Date date) {
+        int update = goodsDao.updateFinishById(id,0);
+        int uodate1=goodsDao.updateRaseTime(id,date);
+        return new SuccessResult(200,"审核通过");
+    }
+
+    @Override
+    public Result unpass(int id) {
+        int update = goodsDao.updateFinishById(id,-2);
+        return new SuccessResult(200,"已成功拒绝");
     }
 
     @Override

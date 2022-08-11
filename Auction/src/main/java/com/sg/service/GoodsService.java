@@ -3,7 +3,10 @@ package com.sg.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sg.entity.Goods;
+import com.sg.result.Result;
+import lombok.Data;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -28,6 +31,12 @@ public interface GoodsService {
     void selectGoodByLastUserId(int lastId, Page<Goods> page, int finish);
 
     void addGoods(Goods goods);
+
+    Result findUnCheckedGoodsList(Integer current, Integer pagesize);
+
+    Result pass(Integer id, Date date);
+
+    Result unpass(int i);
 
     void reApply(int id);
 

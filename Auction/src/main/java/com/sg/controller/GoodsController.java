@@ -7,6 +7,7 @@ import com.sg.result.Result;
 import com.sg.result.impl.ErrorResult;
 import com.sg.result.impl.SuccessResult;
 import com.sg.service.GoodsService;
+import com.sg.vo.GoodsTimeVo;
 import com.sg.vo.GoodsVo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -14,13 +15,14 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
 
 @RestController
 @RequestMapping("/goods")
-@PreAuthorize("hasAnyAuthority('NormalUser')")
+//@PreAuthorize("hasAnyAuthority('NormalUser')")
 public class GoodsController {
 
     @Resource
@@ -109,6 +111,26 @@ public class GoodsController {
     public Result deleteGoods(@PathVariable int id){
         goodsService.deleteGoods(id);
         return new SuccessResult();
+    }
+    //查询 分页分类查询未被审核的商品
+    @GetMapping("/uncheckedList")
+    public Result unCheckedGoodsList(String current,String pageSize) {
+        System.out.println(current+"==="+pageSize);
+        int i = Integer.parseInt(current);
+        int i1 = Integer.parseInt(pageSize);
+        return goodsService.findUnCheckedGoodsList(i,i1);
+    }
+    @PostMapping("/pass")
+    public Result pass( @RequestBody GoodsTimeVo goodsTimeVo){
+        System.out.println("goods:"+goodsTimeVo.getId());
+        Integer id=goodsTimeVo.getId();
+        return goodsService.pass(id,goodsTimeVo.getRaiseTime());
+    }
+    @GetMapping("/unpass")
+    public Result  unpass( String id){
+        System.out.println("goods:"+id);
+        int i = Integer.parseInt(id);
+        return goodsService.unpass(i);
     }
 
 }
