@@ -103,4 +103,10 @@ public class UserController {
     public Result updateUserInfo(@RequestBody User user){
      return  userService.updateUserInfo(user);
     }
+    //管理员添加用户
+    @PostMapping("/user/addUser")
+    @PreAuthorize("hasAnyAuthority('SuperAdmin')")
+    public Result addUserByAdmin(@RequestBody User user){
+        return userService.addUser(user);
+    }
 }

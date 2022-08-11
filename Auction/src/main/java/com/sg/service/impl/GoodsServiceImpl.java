@@ -111,11 +111,9 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     @Override
-    public void selectGoodByLastUserId(int lastId, Page<Goods> page, int finish) {
+    public void selectGoodByLastUserId(int lastId, Page<Goods> page) {
         QueryWrapper<Goods> wrapper = new QueryWrapper<>();
         wrapper.eq("last_user_id", lastId);
-        if (finish != -4)
-            wrapper.eq("finish", finish);
         goodsDao.selectPage(page, wrapper);
     }
 
@@ -166,5 +164,11 @@ public class GoodsServiceImpl implements GoodsService {
         goodsDao.delete(wrapper);
     }
 
+    @Override
+    public void selectGoodByListGoodsId(List<Integer> list, Page<Goods> page) {
+        QueryWrapper<Goods> wrapper = new QueryWrapper<>();
+        wrapper.in("id",list);
+        goodsDao.selectPage(page,wrapper);
+    }
 
 }

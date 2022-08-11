@@ -15,14 +15,13 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
 
 @RestController
 @RequestMapping("/goods")
-//@PreAuthorize("hasAnyAuthority('NormalUser')")
+@PreAuthorize("hasAnyAuthority('NormalUser')")
 public class GoodsController {
 
     @Resource
@@ -86,9 +85,9 @@ public class GoodsController {
 
     // 根据最终拍卖者Id查询商品信息
     @GetMapping("/last-user")
-    public Result queryGoodByLastUserId(int lastId, long current, int finish) {
+    public Result queryGoodByLastUserId(int lastId, long current) {
         Page<Goods> page = new Page<>(current, 4);
-        goodsService.selectGoodByLastUserId(lastId, page, finish);
+        goodsService.selectGoodByLastUserId(lastId, page);
         return new SuccessResult(page);
     }
 

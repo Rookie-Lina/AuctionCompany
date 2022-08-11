@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @Description
@@ -42,13 +43,18 @@ public class AuctionRecordServiceImpl implements AuctionRecordService {
     public int finishAuction(int goodsId) {
         AuctionRecord auctionRecord = newAuction(goodsId);
         UpdateWrapper<Goods> updateWrapper = new UpdateWrapper<>();
-        updateWrapper.eq("id", goodsId).set("raise_time", new Date());
+        updateWrapper.eq("id", goodsId);
         if (auctionRecord == null)
             updateWrapper.set("finish", -1);
         else
+        {
             updateWrapper.set("last_user_id", auctionRecord.getUserId())
-                    .set("now_price", auctionRecord.getNowPrice());
-
+                    .set("now_price", auctionRecord.getNowPrice())
+                    .set("finish",1);
+            auctionRecord.setFinish(1);
+            auctionRecord.setCreateTime(new Date());
+        }
+        auctionRecordDao.insert(auctionRecord);
         return goodsDao.update(null, updateWrapper);
     }
 
@@ -56,7 +62,17 @@ public class AuctionRecordServiceImpl implements AuctionRecordService {
     public AuctionRecord newAuction(int goodsId) {
         QueryWrapper<AuctionRecord> wrapper = new QueryWrapper<>();
         wrapper.eq("goods_id", goodsId)
+                .ne("finish",1)
                 .orderByDesc("create_time");
-        return auctionRecordDao.selectOne(wrapper);
+        return auctionRecordDao.selectList(wrapper).get(0);
+    }
+
+    @Override
+    public List<AuctionRecord> selectAuctionRecordByUserId(int userId) {
+        QueryWrapper<AuctionRecord> wrapper = new QueryWrapper<>();
+        wrapper.select("goods_id")
+                .eq("user_id",userId)
+                .groupBy("goods_id");
+        return auctionRecordDao.selectList(wrapper);
     }
 }

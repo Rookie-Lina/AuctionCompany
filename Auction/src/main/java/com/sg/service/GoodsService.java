@@ -28,7 +28,7 @@ public interface GoodsService {
 
     void selectGoodByUserId(int userId, Page<Goods> page,int finish);
 
-    void selectGoodByLastUserId(int lastId, Page<Goods> page, int finish);
+    void selectGoodByLastUserId(int lastId, Page<Goods> page);
 
     void addGoods(Goods goods);
 
@@ -41,4 +41,6 @@ public interface GoodsService {
     void reApply(int id);
 
     void deleteGoods(int id);
+
+    void selectGoodByListGoodsId(List<Integer> list,Page<Goods> page);
 }

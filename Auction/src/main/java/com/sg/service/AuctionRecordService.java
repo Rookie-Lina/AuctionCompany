@@ -3,6 +3,8 @@ package com.sg.service;
 
 import com.sg.entity.AuctionRecord;
 
+import java.util.List;
+
 /**
  * @Description
  * @auther Rookie_lin
@@ -16,4 +18,6 @@ public interface AuctionRecordService {
     int finishAuction(int goodsId);
 
     AuctionRecord newAuction(int goodsId);
+
+    List<AuctionRecord> selectAuctionRecordByUserId(int userId);
 }

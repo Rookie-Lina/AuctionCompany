@@ -7,6 +7,7 @@ import com.sg.dao.UserDao;
 import com.sg.dao.UserPermissionDao;
 import com.sg.entity.RedisCache;
 import com.sg.entity.User;
+import com.sg.entity.UserPermission;
 import com.sg.result.Result;
 import com.sg.result.impl.ErrorResult;
 import com.sg.result.impl.SuccessResult;
@@ -95,7 +96,7 @@ public class UserServiceImpl implements UserService {
         //存入数据库
         userDao.insert(user);
         //授予用户权限信息
-        userPermissionDao.setauthorityToNomallUser(user.getId(),3);
+        userPermissionDao.setauthorityToUser(user.getId(),3);
         return new SuccessResult(200,"注册成功",user.getLoginName());
     }
     //删除用户功能
@@ -158,5 +159,41 @@ public class UserServiceImpl implements UserService {
         lambdaQueryWrapper.eq(User::getId,user.getId());
         int update = userDao.update(user, lambdaQueryWrapper);
         return new SuccessResult(200,"更新成功",user);
+    }
+
+    @Override
+    public Result addUser(User user) {
+        //检测账号是否为空,为空则返回错误
+        if(user==null||user.getLoginName()==null){
+            return new ErrorResult(403,"无用户信息，请重新注册");
+        }
+        //检验账号是否已经被占用了
+        String loginName = user.getLoginName();
+        LambdaQueryWrapper<User> lambdaQueryWrapper=new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(User::getLoginName,loginName);
+        User user1 = userDao.selectOne(lambdaQueryWrapper);
+        if(user1!=null){
+            return new ErrorResult(403,"该用户名已被注册");
+        }
+        //对用户的密码进行加密
+        BCryptPasswordEncoder bCryptPasswordEncoder=new BCryptPasswordEncoder();
+        String loginPwd = user.getLoginPwd();
+        String encode = bCryptPasswordEncoder.encode(loginPwd);
+        user.setLoginPwd(encode);
+        UserPermission userPermission=new UserPermission();
+        //设置权限id
+        if(user.getRoleId()==0){
+            userPermission.setUserId(user.getId());
+            userPermission.setPermissionId(2);
+        }
+        if(user.getRoleId()==1){
+            userPermission.setUserId(user.getId());
+            userPermission.setPermissionId(3);
+        }
+        //存入数据库
+        userDao.insert(user);
+        //授予用户权限信息
+        userPermissionDao.setauthorityToUser(userPermission.getUserId(),userPermission.getPermissionId());
+        return new SuccessResult(200,"注册成功",user.getLoginName());
     }
 }

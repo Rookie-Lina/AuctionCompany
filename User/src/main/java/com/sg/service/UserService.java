@@ -19,4 +19,6 @@ public interface UserService {
     Result deleteUserById(int i);
 
     Result updateUserInfo(User user);
+
+    Result addUser(User user);
 }
