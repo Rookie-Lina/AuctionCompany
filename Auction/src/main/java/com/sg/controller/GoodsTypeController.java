@@ -27,24 +27,34 @@ public class GoodsTypeController {
 
     // 新增商品类型
     @PostMapping("/one")
-    public Result goodsTypeAdd(String name, int grade, int parentId) {
-        goodsTypeService.addGoodsType(name, grade, parentId);
+    public Result goodsTypeAdd(String name, String grade, String parentId) {
+        int i = Integer.parseInt(grade);
+        int i1 = Integer.parseInt(parentId);
+        i=i+1;
+        goodsTypeService.addGoodsType(name, i, i1);
         return new SuccessResult();
     }
 
     // 修改类型名称
     @PostMapping("/update")
-    public Result goodsTypeUpdate(String name, int id) {
-        goodsTypeService.goodsTypeUpdate(name, id);
+    public Result goodsTypeUpdate(String name, String id) {
+        int i = Integer.parseInt(id);
+        goodsTypeService.goodsTypeUpdate(name, i);
         return new SuccessResult();
     }
 
     // 删除类型
-    @DeleteMapping("/{id}")
-    public Result goodsTypeDelete(@PathVariable int id) {
-        boolean b = goodsTypeService.goodsTypeDelete(id);
+    @GetMapping("/delete")
+    public Result goodsTypeDelete( String id) {
+        int i = Integer.parseInt(id);
+        boolean b = goodsTypeService.goodsTypeDelete(i);
         if (b)
             return new SuccessResult();
         else return new ErrorResult();
+    }
+    //
+    @GetMapping("/goodsTypeListPage")
+    public Result goodsTypeListPage(String current,String pageSize){
+        return  goodsTypeService.goodsTypeListPage(current,pageSize);
     }
 }
