@@ -33,9 +33,9 @@ public class GoodsTypeServiceImpl implements GoodsTypeService {
     public List<GoodsTypeVo> selectAll() {
         List<GoodsType> goodsTypes = goodsTypeDao.selectList(null);
         List<GoodsTypeVo> list = new ArrayList<>();
-        GoodsTypeVo goodsTypeVo1 = new GoodsTypeVo();
         for (GoodsType g1 : goodsTypes) {
             if (g1.getGrade() == 1) {
+                GoodsTypeVo goodsTypeVo1 = new GoodsTypeVo();
                 goodsTypeVo1.setLabel(g1.getTypeName());
                 goodsTypeVo1.setValue(g1.getGrade() + "-" + g1.getId());
                 List<GoodsTypeVo> list2 = new ArrayList<>();

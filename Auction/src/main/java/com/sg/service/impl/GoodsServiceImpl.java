@@ -88,7 +88,10 @@ public class GoodsServiceImpl implements GoodsService {
             List<GoodsType> goodsTypes = goodsTypeDao.selectList(wrapper1);
             List<Integer> list = new ArrayList<>();
             goodsTypes.forEach(i -> list.add(i.getId()));
-            wrapper.in("good_type_id", list);
+            if (!list.isEmpty())
+                wrapper.in("good_type_id", list);
+            else
+                return page;
         } else {
             QueryWrapper<GoodsType> wrapper1 = new QueryWrapper<>();
             wrapper1.eq("second_id", split[1])
@@ -129,46 +132,46 @@ public class GoodsServiceImpl implements GoodsService {
         System.out.println(current);
         System.out.println("----------");
         System.out.println(pageSize);
-        IPage<Goods> page=new Page<>(current,pageSize);
-        LambdaQueryWrapper<Goods>  lambdaQueryWrapper=new LambdaQueryWrapper<>();
-        lambdaQueryWrapper.eq(Goods::getFinish,-3);
+        IPage<Goods> page = new Page<>(current, pageSize);
+        LambdaQueryWrapper<Goods> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(Goods::getFinish, -3);
         IPage<Goods> page1 = goodsDao.selectPage(page, lambdaQueryWrapper);
-        return new SuccessResult(200,"查询成功",page1);
+        return new SuccessResult(200, "查询成功", page1);
     }
 
     @Override
-    public Result pass(Integer id,Date date) {
-        int update = goodsDao.updateFinishById(id,0);
-        int uodate1=goodsDao.updateRaseTime(id,date);
-        return new SuccessResult(200,"审核通过");
+    public Result pass(Integer id, Date date) {
+        int update = goodsDao.updateFinishById(id, 0);
+        int uodate1 = goodsDao.updateRaseTime(id, date);
+        return new SuccessResult(200, "审核通过");
     }
 
     @Override
     public Result unpass(int id) {
-        int update = goodsDao.updateFinishById(id,-2);
-        return new SuccessResult(200,"已成功拒绝");
+        int update = goodsDao.updateFinishById(id, -2);
+        return new SuccessResult(200, "已成功拒绝");
     }
 
     @Override
     public void reApply(int id) {
         UpdateWrapper<Goods> wrapper = new UpdateWrapper<>();
-        wrapper.eq("id",id)
-                .set("finish",-3);
-        goodsDao.update(null,wrapper);
+        wrapper.eq("id", id)
+                .set("finish", -3);
+        goodsDao.update(null, wrapper);
     }
 
     @Override
     public void deleteGoods(int id) {
         QueryWrapper<Goods> wrapper = new QueryWrapper<>();
-        wrapper.eq("id",id);
+        wrapper.eq("id", id);
         goodsDao.delete(wrapper);
     }
 
     @Override
     public void selectGoodByListGoodsId(List<Integer> list, Page<Goods> page) {
         QueryWrapper<Goods> wrapper = new QueryWrapper<>();
-        wrapper.in("id",list);
-        goodsDao.selectPage(page,wrapper);
+        wrapper.in("id", list);
+        goodsDao.selectPage(page, wrapper);
     }
 
 }
