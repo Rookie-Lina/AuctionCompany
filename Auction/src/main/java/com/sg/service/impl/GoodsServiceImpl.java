@@ -78,29 +78,26 @@ public class GoodsServiceImpl implements GoodsService {
         Page<Goods> page = new Page<>(current, size);
         QueryWrapper<Goods> wrapper = new QueryWrapper<>();
         String[] split = goodsType.split("-");
+        QueryWrapper<GoodsType> wrapper1 = null;
         // 根据 goodsType 的拼接值 选出 第三级类别的id
         if (split[0].equals("3")) {
             wrapper.eq("good_type_id", split[1]);
         } else if (split[0].equals("1")) {
-            QueryWrapper<GoodsType> wrapper1 = new QueryWrapper<>();
+            wrapper1 = new QueryWrapper<>();
             wrapper1.eq("first_id", split[1])
                     .eq("grade", 3);
-            List<GoodsType> goodsTypes = goodsTypeDao.selectList(wrapper1);
-            List<Integer> list = new ArrayList<>();
-            goodsTypes.forEach(i -> list.add(i.getId()));
-            if (!list.isEmpty())
-                wrapper.in("good_type_id", list);
-            else
-                return page;
         } else {
-            QueryWrapper<GoodsType> wrapper1 = new QueryWrapper<>();
+            wrapper1 = new QueryWrapper<>();
             wrapper1.eq("second_id", split[1])
                     .eq("grade", 3);
-            List<GoodsType> goodsTypes = goodsTypeDao.selectList(wrapper1);
-            List<Integer> list = new ArrayList<>();
-            goodsTypes.forEach(i -> list.add(i.getId()));
-            wrapper.in("good_type_id", list);
         }
+        List<GoodsType> goodsTypes = goodsTypeDao.selectList(wrapper1);
+        List<Integer> list = new ArrayList<>();
+        goodsTypes.forEach(i -> list.add(i.getId()));
+        if (!list.isEmpty())
+            wrapper.in("good_type_id", list);
+        else
+            return page;
         return goodsDao.selectPage(page, wrapper);
     }
 
