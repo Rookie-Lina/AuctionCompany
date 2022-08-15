@@ -9,5 +9,5 @@ import com.sg.entity.UserAddress;
  */
 public interface UserAddressService {
     UserAddress selectAddressById(int id);
-
+    void addAddress(UserAddress userAddress);
 }

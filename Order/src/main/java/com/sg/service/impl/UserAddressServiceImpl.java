@@ -25,4 +25,9 @@ public class UserAddressServiceImpl implements UserAddressService {
         wrapper.eq("id",id);
         return userAddressDao.selectOne(wrapper);
     }
+
+    @Override
+    public void addAddress(UserAddress userAddress) {
+        userAddressDao.insert(userAddress);
+    }
 }
