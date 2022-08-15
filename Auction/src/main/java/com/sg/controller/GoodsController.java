@@ -119,6 +119,7 @@ public class GoodsController {
         int i1 = Integer.parseInt(pageSize);
         return goodsService.findUnCheckedGoodsList(i,i1);
     }
+    //审核通过
     @PostMapping("/pass")
     public Result pass( @RequestBody GoodsTimeVo goodsTimeVo){
         System.out.println("goods:"+goodsTimeVo.getId());
