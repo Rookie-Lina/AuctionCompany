@@ -23,4 +23,5 @@ public class GoodsVo {
     private double nowPrice; // 商品的当前售价
     private int lastUserId; // 当前竞拍到最高拍卖价的用户ID
     private long raiseTime; // 最后一个买家的最高拍卖价的更新时间
+    private int finish;
 }

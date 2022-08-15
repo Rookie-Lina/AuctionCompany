@@ -44,8 +44,10 @@ public class AuctionRecordServiceImpl implements AuctionRecordService {
         AuctionRecord auctionRecord = newAuction(goodsId);
         UpdateWrapper<Goods> updateWrapper = new UpdateWrapper<>();
         updateWrapper.eq("id", goodsId);
-        if (auctionRecord == null)
+        if (auctionRecord == null){
             updateWrapper.set("finish", -1);
+            return goodsDao.update(null, updateWrapper);
+        }
         else
         {
             updateWrapper.set("last_user_id", auctionRecord.getUserId())
@@ -64,6 +66,8 @@ public class AuctionRecordServiceImpl implements AuctionRecordService {
         wrapper.eq("goods_id", goodsId)
                 .ne("finish",1)
                 .orderByDesc("create_time");
+        List<AuctionRecord> auctionRecords = auctionRecordDao.selectList(wrapper);
+        if (auctionRecords.isEmpty()) return null;
         return auctionRecordDao.selectList(wrapper).get(0);
     }
 
