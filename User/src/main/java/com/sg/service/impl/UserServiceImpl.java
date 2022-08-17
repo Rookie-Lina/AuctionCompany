@@ -194,7 +194,7 @@ public class UserServiceImpl implements UserService {
         //存入数据库
         userDao.insert(user);
         //授予用户权限信息
-        userPermissionDao.setauthorityToUser(userPermission.getUserId(),userPermission.getPermissionId());
+        userPermissionDao.setauthorityToUser(user.getId(),userPermission.getPermissionId());
         return new SuccessResult(200,"注册成功",user.getLoginName());
     }
 }
