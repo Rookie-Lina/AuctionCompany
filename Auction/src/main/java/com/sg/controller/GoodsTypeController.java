@@ -1,5 +1,6 @@
 package com.sg.controller;
 
+import com.sg.entity.GoodsType;
 import com.sg.result.Result;
 import com.sg.result.impl.ErrorResult;
 import com.sg.result.impl.SuccessResult;
@@ -18,6 +19,13 @@ public class GoodsTypeController {
 
     @Resource
     private GoodsTypeService goodsTypeService;
+
+    // 根据Id查询类型名称
+    @GetMapping("{id}")
+    public Result queryById(@PathVariable int id){
+        GoodsType goodsType = goodsTypeService.selectById(id);
+        return new SuccessResult(goodsType);
+    }
 
     @GetMapping("/list")
     public Result queryList() {

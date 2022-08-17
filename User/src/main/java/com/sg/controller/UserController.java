@@ -80,7 +80,7 @@ public class UserController {
      * @return
      */
     @GetMapping("/user/getUserById")
-    @PreAuthorize("hasAnyAuthority('SuperAdmin')")
+    @PreAuthorize("hasAnyAuthority('SuperAdmin','NormalUser')")
     public Result getUserById(String id){
         System.out.println(id);
         int i = Integer.parseInt(id);
