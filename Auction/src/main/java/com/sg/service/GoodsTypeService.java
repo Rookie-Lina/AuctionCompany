@@ -1,5 +1,6 @@
 package com.sg.service;
 
+import com.sg.entity.GoodsType;
 import com.sg.result.Result;
 import com.sg.vo.GoodsTypeVo;
 
@@ -16,5 +17,7 @@ public interface GoodsTypeService {
     boolean goodsTypeDelete(int id);
 
     Result goodsTypeListPage(String current, String pageSize);
+
+    GoodsType selectById(int id);
 }
 

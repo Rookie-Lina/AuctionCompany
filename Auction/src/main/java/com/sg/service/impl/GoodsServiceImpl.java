@@ -84,20 +84,17 @@ public class GoodsServiceImpl implements GoodsService {
             wrapper.eq("good_type_id", split[1]);
         } else if (split[0].equals("1")) {
             wrapper1 = new QueryWrapper<>();
-            wrapper1.eq("first_id", split[1])
-                    .eq("grade", 3);
+            wrapper1.eq("first_id", split[1]);
         } else {
             wrapper1 = new QueryWrapper<>();
-            wrapper1.eq("second_id", split[1])
-                    .eq("grade", 3);
+            wrapper1.eq("second_id", split[1]);
         }
         List<GoodsType> goodsTypes = goodsTypeDao.selectList(wrapper1);
         List<Integer> list = new ArrayList<>();
         goodsTypes.forEach(i -> list.add(i.getId()));
-        if (!list.isEmpty())
-            wrapper.in("good_type_id", list);
-        else
-            return page;
+        // 加上自己本身Id值
+        list.add(Integer.valueOf(split[1]));
+        wrapper.eq("finish", 0).in("good_type_id", list);
         return goodsDao.selectPage(page, wrapper);
     }
 
@@ -167,8 +164,10 @@ public class GoodsServiceImpl implements GoodsService {
     @Override
     public void selectGoodByListGoodsId(List<Integer> list, Page<Goods> page) {
         QueryWrapper<Goods> wrapper = new QueryWrapper<>();
-        wrapper.in("id", list);
-        goodsDao.selectPage(page, wrapper);
+        if (!list.isEmpty()) {
+            wrapper.in("id", list);
+            goodsDao.selectPage(page, wrapper);
+        }
     }
 
 }

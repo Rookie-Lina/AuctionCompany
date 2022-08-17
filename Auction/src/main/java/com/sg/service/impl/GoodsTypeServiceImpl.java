@@ -125,4 +125,9 @@ public class GoodsTypeServiceImpl implements GoodsTypeService {
         IPage<GoodsType> iPage1 = goodsTypeDao.selectPage(iPage, lambdaQueryWrapper);
         return new SuccessResult(200,"查询商品类别信息成功",iPage1);
     }
+
+    @Override
+    public GoodsType selectById(int id) {
+        return goodsTypeDao.selectById(id);
+    }
 }
