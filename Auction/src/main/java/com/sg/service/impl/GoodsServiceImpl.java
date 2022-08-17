@@ -166,9 +166,8 @@ public class GoodsServiceImpl implements GoodsService {
         QueryWrapper<Goods> wrapper = new QueryWrapper<>();
         if (!list.isEmpty()) {
             wrapper.in("id", list);
-            return;
+            goodsDao.selectPage(page, wrapper);
         }
-        goodsDao.selectPage(page, wrapper);
     }
 
 }
