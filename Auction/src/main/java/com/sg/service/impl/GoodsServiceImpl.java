@@ -88,6 +88,8 @@ public class GoodsServiceImpl implements GoodsService {
         } else {
             wrapper1 = new QueryWrapper<>();
             wrapper1.eq("second_id", split[1]);
+
+
         }
         List<GoodsType> goodsTypes = goodsTypeDao.selectList(wrapper1);
         List<Integer> list = new ArrayList<>();

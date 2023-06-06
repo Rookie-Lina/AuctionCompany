@@ -9,11 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.Date;
 import java.util.List;
 
-/**
- * @Description
- * @auther Rookie_lin
- * @create 2022-07-18 20:20
- */
+
 @Mapper
 public interface GoodsDao extends BaseMapper<Goods> {
 

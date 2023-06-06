@@ -50,8 +50,8 @@ public class GoodsController {
 
     //查询 分页分类查询商品
     @GetMapping("/list")
-    public Result queryGoodsList(int current, @RequestParam(defaultValue = "") String goodsType,@RequestParam(defaultValue = "") String search) {
-
+    public Result queryGoodsList(int current, @RequestParam(defaultValue = "") String goodsType,
+                                 @RequestParam(defaultValue = "") String search) {
         IPage<Goods> goodsIPage = null;
         if (Objects.equals(goodsType, "") && Objects.equals(search, ""))
             goodsIPage = goodsService.selectGoodsListNo(current, 4);

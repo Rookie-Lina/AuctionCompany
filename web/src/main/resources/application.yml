@@ -41,6 +41,6 @@ aliyun:
     file:
       endpoint: oss-cn-qingdao.aliyuncs.com
       keyId: LTAI5tCevyhHN1KjZmjVRMvq
-      keySecret: zaADdSZ6yjKswrNioE9Bsa9H7a9LP0
+      keySecret: ***
       dirName: auction_company
       bucketName: rookie-lin
